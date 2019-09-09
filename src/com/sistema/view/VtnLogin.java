@@ -9,12 +9,12 @@ package com.sistema.view;
  *
  * @author Reynaldo
  */
-public class VtnPrincipal extends javax.swing.JFrame {
+public class VtnLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form VtnPrincipal
      */
-    public VtnPrincipal() {
+    public VtnLogin() {
         initComponents();
         this.setResizable(false);//no redimensionable
         this.setLocationRelativeTo(null);//localizacion al centro de la pantalla
@@ -54,6 +54,11 @@ public class VtnPrincipal extends javax.swing.JFrame {
         jLabel4.setText("LOGIN DE USUARIO - SISTEMA DE VENTAS");
 
         jButton1.setText("Aceptar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -140,6 +145,13 @@ public class VtnPrincipal extends javax.swing.JFrame {
          System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        vtnPrincipal principal=new vtnPrincipal();
+        principal.setVisible(true);
+        this.dispose();//ocultando la ventana
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -157,20 +169,21 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VtnPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VtnLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VtnPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VtnLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VtnPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VtnLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VtnPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VtnLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VtnPrincipal().setVisible(true);
+                new VtnLogin().setVisible(true);
             }
         });
     }

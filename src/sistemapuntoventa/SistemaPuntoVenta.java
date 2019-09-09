@@ -5,7 +5,7 @@
  */
 package sistemapuntoventa;
 
-import com.sistema.view.VtnPrincipal;
+import com.sistema.view.VtnLogin;
 
 /**
  *
@@ -18,7 +18,7 @@ public class SistemaPuntoVenta {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        VtnPrincipal principal=new VtnPrincipal();
+        VtnLogin principal=new VtnLogin();
         principal.setVisible(true);
         
     }
