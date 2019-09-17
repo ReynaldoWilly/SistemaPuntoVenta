@@ -5,6 +5,15 @@
  */
 package com.sistema.view;
 
+import com.pos.core.Validaciones;
+import com.pos.dao.almacenDao;
+import com.pos.pojos.Almacen;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Reynaldo
@@ -15,6 +24,7 @@ public class vtnAlmacen extends javax.swing.JInternalFrame {
      * Creates new form vtnAlmacen
      */
     public static String validaVentana;//variable que realiza la validacion de ventana abierta
+    private Almacen ObjAlmacen = new Almacen();
 
     public vtnAlmacen() {
         initComponents();
@@ -24,6 +34,85 @@ public class vtnAlmacen extends javax.swing.JInternalFrame {
         int b = vtnPrincipal.panelMDI.getHeight() - this.getHeight();
         setLocation(a / 2, b / 2);
 
+        bloquearCamposAlmacen();
+        listarDatosAlmacen();
+
+        //------botones
+        btnAcepAlm.setEnabled(false);
+        btnCanAlm.setEnabled(false);
+        btnActualizar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+
+    }
+//Metodo que bloquea los campos de texto
+
+    public void bloquearCamposAlmacen() {
+        txtNomAlm.setEnabled(false);
+        txtCodAlm.setEnabled(false);
+        txtDirAlm.setEnabled(false);
+        txtFonoAlm.setEnabled(false);
+        btnAcepAlm.setEnabled(false);
+        btnCanAlm.setEnabled(false);
+        btnHabilitar.setEnabled(true);
+        btnActualizar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        //--------botones de accion-----
+        btnHabilitar.setEnabled(true);
+        btnHabilitar.setText("Habilitar Edición");
+        btnNuevo.setEnabled(true);
+        //--------fin botones de accion---
+
+    }
+
+    //Metodo que habilita los campos de texto
+    public void habilitarCamposAmlacen() {
+        txtNomAlm.setEnabled(true);
+        txtCodAlm.setEnabled(true);
+        txtDirAlm.setEnabled(true);
+        txtFonoAlm.setEnabled(true);
+        btnAcepAlm.setEnabled(true);
+        btnCanAlm.setEnabled(true);
+        limpiarCamposAlmacen();
+    }
+
+    public void limpiarCamposAlmacen() {
+        txtNomAlm.setText("");
+        txtCodAlm.setText("");
+        txtDirAlm.setText("");
+        txtFonoAlm.setText("");
+    }
+
+    public void listarDatosAlmacen() {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) this.tablaAlamacen.getModel();//creando el modela ára llenar los datos al JTableje
+            limpiarTabla(tablaAlamacen);
+            //realizando la consulta para realizar el listado de los datos
+            almacenDao almDao = new almacenDao();
+            List<Almacen> lista = almDao.listarAlmacen();
+            Object[] fila = new Object[modelo.getColumnCount()];
+            for (int i = 0; i < lista.size(); i++) {
+                fila[0] = lista.get(i).getIdAlmacen();
+                fila[1] = lista.get(i).getNombre();
+                fila[2] = lista.get(i).getDireccion();
+                fila[3] = lista.get(i).getFono();
+                fila[4] = lista.get(i).getCodigo();
+                modelo.addRow(fila);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error " + e, null, JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void limpiarTabla(JTable tabla) {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+            int filas = tabla.getRowCount();
+            for (int i = 0; filas > i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
     }
 
     /**
@@ -35,7 +124,28 @@ public class vtnAlmacen extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        labelUsuario = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        txtNomAlm = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtCodAlm = new javax.swing.JTextField();
+        txtDirAlm = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtFonoAlm = new javax.swing.JTextField();
+        btnAcepAlm = new javax.swing.JButton();
+        btnCanAlm = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaAlamacen = new javax.swing.JTable();
+        btnActualizar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnHabilitar = new javax.swing.JToggleButton();
 
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
@@ -55,23 +165,256 @@ public class vtnAlmacen extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("GESTION DE ALMACEN");
+        jPanel1.setBackground(new java.awt.Color(11, 58, 126));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        labelUsuario.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        labelUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        labelUsuario.setText("GESTION DE ALMACEN");
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/images/almacen.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(530, 530, 530))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(147, 147, 147)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(labelUsuario)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(labelUsuario)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addContainerGap())
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gestión de Almacen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 16))); // NOI18N
+
+        jLabel1.setText("Nombre:");
+
+        txtNomAlm.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel4.setText("Direccion:");
+
+        jLabel5.setText("Codigo:");
+
+        txtCodAlm.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
+
+        txtDirAlm.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel6.setText("Teléfono:");
+
+        txtFonoAlm.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
+
+        btnAcepAlm.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        btnAcepAlm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/guardar.png"))); // NOI18N
+        btnAcepAlm.setText("Aceptar");
+        btnAcepAlm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAcepAlmActionPerformed(evt);
+            }
+        });
+
+        btnCanAlm.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        btnCanAlm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/cancelar.png"))); // NOI18N
+        btnCanAlm.setText("Cancelar");
+        btnCanAlm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCanAlmActionPerformed(evt);
+            }
+        });
+
+        btnNuevo.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/agregar.png"))); // NOI18N
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtFonoAlm, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtDirAlm, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                            .addComponent(txtCodAlm)
+                            .addComponent(txtNomAlm))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAcepAlm)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCanAlm)
+                .addGap(8, 8, 8))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtNomAlm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtCodAlm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtDirAlm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtFonoAlm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAcepAlm, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
+                    .addComponent(btnCanAlm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jScrollPane1MousePressed(evt);
+            }
+        });
+
+        tablaAlamacen.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "NOMBRE", "DIRECCIÓN", "TELÉFONO", "CODIGO"
+            }
+        ));
+        tablaAlamacen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tablaAlamacenMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaAlamacen);
+
+        btnActualizar.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/modificar.png"))); // NOI18N
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/delete.png"))); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnHabilitar.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        btnHabilitar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/habilitar.png"))); // NOI18N
+        btnHabilitar.setText("Habilitar edición");
+        btnHabilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHabilitarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(117, 117, 117)
+                .addComponent(btnHabilitar)
+                .addGap(45, 45, 45)
+                .addComponent(btnActualizar)
+                .addGap(41, 41, 41)
+                .addComponent(btnEliminar)
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnHabilitar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(256, 256, 256)
-                .addComponent(jLabel1)
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         pack();
@@ -83,8 +426,176 @@ public class vtnAlmacen extends javax.swing.JInternalFrame {
         validaVentana = null;
     }//GEN-LAST:event_formInternalFrameClosing
 
+    private void btnAcepAlmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcepAlmActionPerformed
+        try {
+            List<String> validar = new ArrayList<>();
+            validar.add(txtNomAlm.getText());
+            validar.add(txtDirAlm.getText());
+            validar.add(txtFonoAlm.getText());
+            validar.add(txtCodAlm.getText());
+            if (Validaciones.validarCampos(validar)) {
+                Almacen alm = new Almacen(txtNomAlm.getText(), txtDirAlm.getText(), txtFonoAlm.getText(), txtCodAlm.getText());
+                almacenDao almDao = new almacenDao();
+                if (almDao.registarAlmacen(alm)) {
+                    JOptionPane.showMessageDialog(this, "Registro de almacen correcto..!!", null, JOptionPane.INFORMATION_MESSAGE);
+                    limpiarCamposAlmacen();
+                    bloquearCamposAlmacen();
+                    listarDatosAlmacen();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Faltan campos por llenar..!!", null, JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error-->" + e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAcepAlmActionPerformed
+
+    private void btnCanAlmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCanAlmActionPerformed
+        // TODO add your handling code here:
+        btnNuevo.setEnabled(true);
+        btnHabilitar.setEnabled(true);
+
+        btnAcepAlm.setEnabled(false);
+        btnActualizar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnAcepAlm.setEnabled(false);
+        btnCanAlm.setEnabled(false);
+    }//GEN-LAST:event_btnCanAlmActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        habilitarCamposAmlacen();
+        btnHabilitar.setEnabled(false);
+        btnNuevo.setEnabled(false);
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void tablaAlamacenMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAlamacenMousePressed
+
+        DefaultTableModel tm = (DefaultTableModel) tablaAlamacen.getModel();
+        String dato = String.valueOf(tm.getValueAt(tablaAlamacen.getSelectedRow(), 0));
+        almacenDao almDao = new almacenDao();
+        try {
+            Almacen alm = new Almacen(Integer.parseInt(dato), String.valueOf(tm.getValueAt(tablaAlamacen.getSelectedRow(), 1)), String.valueOf(tm.getValueAt(tablaAlamacen.getSelectedRow(), 2)), String.valueOf(tm.getValueAt(tablaAlamacen.getSelectedRow(), 3)), String.valueOf(tm.getValueAt(tablaAlamacen.getSelectedRow(), 4)));
+            this.setObjAlmacen(alm);//insertando el
+            txtNomAlm.setText(alm.getNombre());
+            txtDirAlm.setText(alm.getDireccion());
+            txtFonoAlm.setText(alm.getFono());
+            txtCodAlm.setText(alm.getCodigo());
+            //JOptionPane.showMessageDialog(null, "Precionado" + cat.getNombre());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error" + ex.getMessage(), null, JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_tablaAlamacenMousePressed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        try {
+            List<String> validar = new ArrayList<>();
+            validar.add(txtNomAlm.getText());
+            validar.add(txtDirAlm.getText());
+            validar.add(txtFonoAlm.getText());
+            validar.add(txtCodAlm.getText());
+
+            if (Validaciones.validarCampos(validar)) {
+                Almacen alm = this.getObjAlmacen();//recuperando el objeto recuperado desde la tabla
+                alm.setNombre(txtNomAlm.getText());
+                alm.setDireccion(txtDirAlm.getText());
+                alm.setFono(txtFonoAlm.getText());
+                alm.setCodigo(txtCodAlm.getText());
+
+                almacenDao almDao = new almacenDao();
+                if (almDao.actualizarAlmacen(alm)) {
+                    JOptionPane.showMessageDialog(this, "Actualización correcta", "Mensaje..", JOptionPane.INFORMATION_MESSAGE);
+                    limpiarCamposAlmacen();
+                    bloquearCamposAlmacen();
+                    listarDatosAlmacen();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Faltan campos por llenar..!!", null, JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error" + e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (!txtNomAlm.getText().equals("")) {
+                int y = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar el registro?");
+                if (y == JOptionPane.YES_OPTION) {
+                    almacenDao alDao = new almacenDao();
+                    if (alDao.eliminarAlmacen(this.getObjAlmacen())) {
+                        JOptionPane.showMessageDialog(this, "Eliminacion correcta", "Mensaje..!!", JOptionPane.INFORMATION_MESSAGE);
+                        limpiarCamposAlmacen();
+                        bloquearCamposAlmacen();
+                        listarDatosAlmacen();
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione un Almacen a eliminar..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
+
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Hay productos asociados a esta categoria\npor lo que no se puede eliminar..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHabilitarActionPerformed
+        // TODO add your handling code here:
+        if (btnHabilitar.isSelected()) {
+            habilitarCamposAmlacen();
+            btnNuevo.setEnabled(false);
+            btnCanAlm.setEnabled(false);
+            btnAcepAlm.setEnabled(false);
+            btnActualizar.setEnabled(true);
+            btnEliminar.setEnabled(true);
+            btnHabilitar.setText("Cancelar");
+        } else {
+            //limpiarCamposAlmacen();
+            bloquearCamposAlmacen();
+            btnHabilitar.setEnabled(true);
+            tablaAlamacen.setEnabled(true);
+            btnHabilitar.setText("Habilitar Edición");
+        }
+    }//GEN-LAST:event_btnHabilitarActionPerformed
+
+    private void jScrollPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MousePressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jScrollPane1MousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAcepAlm;
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnCanAlm;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JToggleButton btnHabilitar;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelUsuario;
+    private javax.swing.JTable tablaAlamacen;
+    private javax.swing.JTextField txtCodAlm;
+    private javax.swing.JTextField txtDirAlm;
+    private javax.swing.JTextField txtFonoAlm;
+    private javax.swing.JTextField txtNomAlm;
     // End of variables declaration//GEN-END:variables
+
+    public Almacen getObjAlmacen() {
+        return ObjAlmacen;
+    }
+
+    public void setObjAlmacen(Almacen ObjAlmacen) {
+        this.ObjAlmacen = ObjAlmacen;
+    }
 }

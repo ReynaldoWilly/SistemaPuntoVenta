@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.pos.pojos.Almacen" table="almacen">
+        <id name="idAlmacen" type="java.lang.Integer">
+            <column name="idAlmacen" />
+            <generator class="identity" />
+        </id>
+        
+        <!--
+        <set name="encargado" table="encargado" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="almacen_idalmacen" not-null="true" />
+            </key>
+            <one-to-many class="mapeos.Encargado" />
+        </set>
+        -->
+        
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="100" />
+        </property>
+        <property name="fono" type="string">
+            <column name="fono" length="20" />
+        </property>
+        <property name="codigo" type="string">
+            <column name="codAlmacen" length="50" />
+        </property>
+        
+        <!--  <set name="inventarios" table="inventario" inverse="true" lazy="true" fetch="select" cascade="all">
+            <key>
+                <column name="almacen_idalmacen" />
+            </key>
+            <one-to-many class="mapeos.Inventario" />
+        </set>-->
+        
+    </class>
+</hibernate-mapping>
