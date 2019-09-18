@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    
+    <class name="com.pos.pojos.Producto" table="producto">
+        <id name="idProducto" type="java.lang.Integer">
+            <column name="idProducto" />
+            <generator class="identity" />
+        </id>
+        
+        <property name="nombre" type="string">
+            <column name="nombre" length="100" />
+        </property>
+        
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="300" />
+        </property>
+        <property name="precioCompra" type="string">
+            <column name="precioCompra" />
+        </property>
+        <property name="codigo" type="string">
+            <column name="codProducto" length="50" />
+        </property>
+        <property name="estado" type="string">
+            <column name="estado" length="50" />
+        </property>
+        <property name="imagen" type="binary">
+            <column name="imagen" />
+        </property>
+        <property name="categoria" type="string">
+            <column name="categoria" length="50" />
+        </property>
+          
+        <property name="medida" type="string">
+            <column name="medida" length="50" />
+        </property>  
+           
+        <property name="stcokMinimo" type="integer" column="stcokMinimo"/>
+    </class>
+</hibernate-mapping>

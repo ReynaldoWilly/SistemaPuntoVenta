@@ -6,6 +6,7 @@
 package com.sistema.view;
 
 import com.pos.pojos.Usuario;
+import java.beans.PropertyVetoException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -25,24 +26,21 @@ public class vtnPrincipal extends javax.swing.JFrame {
         userlogin = VtnLogin.user;//recibiendo el objeto usuario  de la ventana de logueqo
         labelUsuario.setText(userlogin.getNombres() + " " + userlogin.getApellidos());
         labelCargo.setText(userlogin.getCargo());
-        if (userlogin.getTipousuario() == 1) 
-        {
+        if (userlogin.getTipousuario() == 1) {
             labelRolUser.setText("Vendedor");
             //Habilitar opciones de vendedor
             menuGestionUsers.setEnabled(false);
-            
+
         }
-        if (userlogin.getTipousuario() == 2) 
-        {
+        if (userlogin.getTipousuario() == 2) {
             //habilitar opciones de administrador
             labelRolUser.setText("Administrador");
         }
-        if (userlogin.getTipousuario() == 3) 
-        {
+        if (userlogin.getTipousuario() == 3) {
             //habilitar los permisos para Super Usuario todos los persmisos
             labelRolUser.setText("Seper usuario");
         }
-        
+
         //Maximizando la ventana principal
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
@@ -71,6 +69,8 @@ public class vtnPrincipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de ventas POS");
@@ -174,7 +174,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
 
         getContentPane().add(panelMDI, java.awt.BorderLayout.CENTER);
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/file.png"))); // NOI18N
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/images/OC.png"))); // NOI18N
         jMenu1.setText("Archivo");
         jMenuBar1.add(jMenu1);
 
@@ -203,6 +203,19 @@ public class vtnPrincipal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem1);
 
         jMenuBar1.add(jMenu2);
+
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/images/producto2.png"))); // NOI18N
+        jMenu3.setText("Productos");
+
+        jMenuItem3.setText("Gestionar producto");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -242,6 +255,29 @@ public class vtnPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "La ventana gestión de usuarios ya esta activa..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        try {
+            String varValidacion = vtnProducto.validaVentana;
+            if (varValidacion == null) {
+                vtnProducto alm = new vtnProducto();
+                alm.setTitle("Gestión de producto ");
+                alm.setResizable(false);//no es redimencionable
+                alm.setMaximizable(true);//no se puede maximizar
+                alm.setClosable(true);//si se puede cerra la ventana
+                alm.setIconifiable(true);
+                //alm.setMaximum(true);
+                panelMDI.add(alm);
+                alm.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "La ventana gestión de productos ya esta activa..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
+            }
+        } 
+        catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error"+ex.getMessage(), "Mensaje..", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -284,9 +320,11 @@ public class vtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelCargo;

@@ -10,5 +10,6 @@
     <property name="hibernate.show_sql">true</property>
     <mapping resource="com/pos/mapeos/Usuario.hbm.xml"/>
     <mapping resource="com/pos/mapeos/Almacen.hbm.xml"/>
+    <mapping resource="com/pos/mapeos/Producto.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
