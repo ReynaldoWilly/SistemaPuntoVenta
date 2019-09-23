@@ -5,12 +5,9 @@
  */
 package com.pos.dao;
 
-import com.pos.pojos.Almacen;
-import com.pos.pojos.Usuario;
+import com.pos.pojos.Inventario;
 import com.pos.util.HibernateUtil;
-import java.util.List;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -18,9 +15,9 @@ import org.hibernate.Transaction;
  *
  * @author Reynaldo
  */
-public class almacenDao {
-
-    Session sesion;
+public class InventarioDao 
+{
+     Session sesion;
     Transaction tx;
 
     //Metodo que inicia la sesion 
@@ -34,15 +31,15 @@ public class almacenDao {
         throw new HibernateException("Ocurrio un error en la capa de acceso a datos");
     }
 
-    public boolean registarAlmacen(Almacen alm) throws Exception {
+    public boolean registrarInventario(Inventario inv) throws Exception {
         iniciarOperacion();
-        sesion.save(alm);
+        sesion.save(inv);
         tx.commit();
         sesion.close();
         return true;
     }
 
-    public List<Almacen> listarAlmacen() throws Exception {
+ /*   public List<Almacen> listarAlmacen() throws Exception {
         iniciarOperacion();
         Query query = sesion.createQuery("From Almacen");
         List<Almacen> lista = query.list();
@@ -60,7 +57,7 @@ public class almacenDao {
 
     public int buscarAlmacenId(String nombre) throws Exception {
         iniciarOperacion();
-        Query query = sesion.createQuery("Select  A.idAlmacen From Almacen A where nombre=?");
+        Query query = sesion.createQuery("Select  A.idalmacen From Almacen A where nombre=?");
         query.setString(0, nombre);
         int id = (int) query.uniqueResult();
         tx.commit();
@@ -75,5 +72,6 @@ public class almacenDao {
         sesion.close();
         return true;
     }
-
+*/
+    
 }

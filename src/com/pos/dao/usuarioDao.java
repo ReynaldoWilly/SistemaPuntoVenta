@@ -6,7 +6,7 @@
 package com.pos.dao;
 
 import com.pos.pojos.Usuario;
-import com.pos.uitl.HibernateUtil;
+import com.pos.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;

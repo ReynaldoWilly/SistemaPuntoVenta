@@ -6,7 +6,7 @@
 package com.pos.dao;
 
 import com.pos.pojos.Producto;
-import com.pos.uitl.HibernateUtil;
+import com.pos.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -120,4 +120,24 @@ public class productoDao {
         sesion.close();
         return true;
     }
+
+    public List<Object[]> listarProductosProv() throws Exception {
+        iniciarOperacion();
+        Query query = sesion.createQuery("Select p.idProducto,p.nombre from Producto p");
+        List<Object[]> lista = query.list();
+        sesion.close();
+        return lista;
+    }
+
+    //Metodo que realiza la busqueda de un producto para el filtro por nombre
+    public List<Object[]> buscarProductoFiltroBYNombreByAlmacen(String nom) throws Exception {
+        List<Object[]> resultado;
+        iniciarOperacion();
+        Query query = sesion.createQuery("SELECT p.idProducto,p.nombre FROM Producto p WHERE  p.nombre like  '"+nom+"%'");
+        System.out.println(query);
+        resultado = query.list();
+        sesion.close();
+        return resultado;
+    }
+
 }
