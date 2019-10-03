@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.pos.pojos.HistorialInventario" table="historialingreso">
+        <id name="idHistorial" type="java.lang.Integer">
+            <column name="idHistorial" />
+            <generator class="identity" />
+        </id>
+        
+        <property name="fecha" type="date">
+            <column name="fecha"/>
+        </property>
+        
+        <property name="nuEnvio" type="string">
+            <column name="numeroEnvio" length="50" />
+        </property>
+        
+        <property name="idAlmacen" type="integer">
+            <column name="idAlmacen" not-null="true" />
+        </property>
+        
+        <property name="observaciones" type="string">
+            <column name="observaciones" length="400" />
+        </property>
+        
+        <property name="idProducto" type="integer">
+            <column name="idProducto" />
+        </property>
+        
+        <property name="cantidad" type="integer">
+            <column name="cantidad" />
+        </property>
+        
+        
+        <property name="idColor" type="integer">
+            <column name="idColor"/>
+        </property>
+ 
+    </class>
+
+</hibernate-mapping>

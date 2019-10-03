@@ -13,12 +13,24 @@ public class Inventario
 {
     private int idInventario;
     private int stock;
-    private String color;
+    private int idcolor;
     private int idProducto;
     private int idAlmacen;
+    private String tipoInv;
 
-    public Inventario() {
+    public Inventario() 
+    {
+      
     }
+
+    public Inventario(int stock, int idcolor, int idProducto, int idAlmacen, String tipoInv) {
+        this.stock = stock;
+        this.idcolor = idcolor;
+        this.idProducto = idProducto;
+        this.idAlmacen = idAlmacen;
+        this.tipoInv = tipoInv;
+    }
+
 
     public int getIdInventario() {
         return idInventario;
@@ -36,14 +48,7 @@ public class Inventario
         this.stock = stock;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
+  
     public int getIdProducto() {
         return idProducto;
     }
@@ -58,5 +63,21 @@ public class Inventario
 
     public void setIdAlmacen(int idAlmacen) {
         this.idAlmacen = idAlmacen;
+    }
+
+    public int getIdcolor() {
+        return idcolor;
+    }
+
+    public void setIdcolor(int idcolor) {
+        this.idcolor = idcolor;
+    }
+
+    public String getTipoInv() {
+        return tipoInv;
+    }
+
+    public void setTipoInv(String tipoInv) {
+        this.tipoInv = tipoInv;
     }
 }

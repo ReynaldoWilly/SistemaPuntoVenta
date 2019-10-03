@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    
+    <class name="com.pos.pojos.Inventario" table="inventario">
+        <id name="idInventario" type="java.lang.Integer">
+            <column name="idInventario" />
+            <generator class="identity" />
+        </id>
+        
+        <property name="stock" type="integer">
+            <column name="stock"/>
+        </property>
+        
+        <property name="idcolor" type="integer">
+            <column name="idcolor"  />
+        </property>
+        
+        <property name="idProducto" type="integer">
+            <column name="idProducto" not-null="true" />
+        </property>
+        
+        <property name="idAlmacen" type="integer">
+            <column name="idAlmacen"/>
+        </property>
+        
+        <property name="tipoInv" type="string">
+            <column name="tipoInventario" length="50"/>
+        </property>
+        
+    </class>
+
+</hibernate-mapping>

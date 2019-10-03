@@ -12,5 +12,7 @@
     <mapping resource="com/pos/mapeos/Usuario.hbm.xml"/>
     <mapping resource="com/pos/mapeos/Colores.hbm.xml"/>
     <mapping resource="com/pos/mapeos/Producto.hbm.xml"/>
+    <mapping resource="com/pos/mapeos/HistorialInventario.hbm.xml"/>
+    <mapping resource="com/pos/mapeos/Inventario.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

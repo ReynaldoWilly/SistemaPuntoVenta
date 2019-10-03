@@ -12,25 +12,30 @@ import java.util.Date;
  * @author Reynaldo
  */
 public class HistorialInventario {
+
     private int idHistorial;
     private Date fecha;
     private String nuEnvio;
     private int idAlmacen;
     private String observaciones;
     private int idProducto;
+    private int cantidad;
     private int idColor;
 
     public HistorialInventario() {
     }
 
-    public HistorialInventario(Date fecha, String nuEnvio, int idAlmacen, String observaciones, int idProducto, int idColor) {
+    public HistorialInventario(Date fecha, String nuEnvio, int idAlmacen, String observaciones, int idProducto, int cantidad, int idColor) {
         this.fecha = fecha;
         this.nuEnvio = nuEnvio;
         this.idAlmacen = idAlmacen;
         this.observaciones = observaciones;
         this.idProducto = idProducto;
+        this.cantidad = cantidad;
         this.idColor = idColor;
     }
+
+   
 
     public int getIdHistorial() {
         return idHistorial;
@@ -87,5 +92,13 @@ public class HistorialInventario {
     public void setIdColor(int idColor) {
         this.idColor = idColor;
     }
-    
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
 }

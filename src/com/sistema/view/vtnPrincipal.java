@@ -76,6 +76,8 @@ public class vtnPrincipal extends javax.swing.JFrame {
         jMenu7 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
 
@@ -166,7 +168,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
         panelMDILayout.setHorizontalGroup(
             panelMDILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMDILayout.createSequentialGroup()
-                .addContainerGap(532, Short.MAX_VALUE)
+                .addContainerGap(738, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
         );
@@ -248,7 +250,21 @@ public class vtnPrincipal extends javax.swing.JFrame {
 
         jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/images/ventas2.png"))); // NOI18N
         jMenu5.setText("Ventas");
+
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/Add-Folder-icon.png"))); // NOI18N
+        jMenuItem6.setText("Lista de precios");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem6);
+
         jMenuBar1.add(jMenu5);
+
+        jMenu8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/images/combo.png"))); // NOI18N
+        jMenu8.setText("Cotizaciones");
+        jMenuBar1.add(jMenu8);
 
         jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/ajustes.png"))); // NOI18N
         jMenu6.setText("Configuración");
@@ -332,7 +348,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
                 vtnAddProductoIngresoInventario alm = new vtnAddProductoIngresoInventario();
                 alm.setTitle("Ingreso almacen....:::: ");
                 alm.setResizable(false);//no es redimencionable
-                alm.setMaximizable(true);//no se puede maximizar
+                alm.setMaximizable(false);//no se puede maximizar
                 alm.setClosable(true);//si se puede cerra la ventana
                 alm.setIconifiable(true);
                 //alm.setMaximum(true);
@@ -362,6 +378,24 @@ public class vtnPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "La ventana ya esta activa..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        /*String varValidacion = vtnListaPrecios.validaVentana;
+         if (varValidacion == null) {
+         vtnListaPrecios alm = new vtnListaPrecios();
+         alm.setTitle("Definición de precios..::..");
+         alm.setResizable(false);//no es redimencionable
+         alm.setMaximizable(false);//no se puede maximizar
+         alm.setClosable(true);//si se puede cerra la ventana
+         alm.setIconifiable(true);
+         panelMDI.add(alm);
+         alm.setVisible(true);
+         } else {
+         JOptionPane.showMessageDialog(this, "La ventana ya esta activa..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
+         }
+         */
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -409,12 +443,14 @@ public class vtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
