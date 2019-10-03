@@ -69,7 +69,7 @@ public class Validaciones {
         });
     }
 
-    public void limpiarTabla(JTable tabla) {
+    public static void limpiarTabla(JTable tabla) {
         try {
             DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
             int filas = tabla.getRowCount();

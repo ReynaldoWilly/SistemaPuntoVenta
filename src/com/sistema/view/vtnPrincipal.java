@@ -69,12 +69,12 @@ public class vtnPrincipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
@@ -211,6 +211,32 @@ public class vtnPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem1);
 
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/Notes.png"))); // NOI18N
+        jMenuItem4.setText("Ingresar productos");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
+        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/file.png"))); // NOI18N
+        jMenu7.setText("Operaciones inventario");
+
+        jMenuItem8.setText("Ajustes ");
+        jMenu7.add(jMenuItem8);
+
+        jMenu2.add(jMenu7);
+
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/factura.png"))); // NOI18N
+        jMenuItem7.setText("Kardex inventario");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem7);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/images/producto2.png"))); // NOI18N
@@ -225,28 +251,6 @@ public class vtnPrincipal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem3);
 
         jMenuBar1.add(jMenu3);
-
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/images/Inventory-icon.png"))); // NOI18N
-        jMenu4.setText("Inventario");
-
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/Notes.png"))); // NOI18N
-        jMenuItem4.setText("Ingresar productos");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem4);
-
-        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/file.png"))); // NOI18N
-        jMenu7.setText("Operaciones inventario");
-
-        jMenuItem8.setText("Ajustes ");
-        jMenu7.add(jMenuItem8);
-
-        jMenu4.add(jMenu7);
-
-        jMenuBar1.add(jMenu4);
 
         jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/images/ventas2.png"))); // NOI18N
         jMenu5.setText("Ventas");
@@ -397,6 +401,23 @@ public class vtnPrincipal extends javax.swing.JFrame {
          */
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        String varValidacion = vtnKardexInventario.validaVentana;
+        if (varValidacion == null) {
+            vtnKardexInventario alm = new vtnKardexInventario();
+            alm.setTitle("Kardex inventario..::..");
+            alm.setResizable(false);//no es redimencionable
+            alm.setMaximizable(false);//no se puede maximizar
+            alm.setClosable(true);//si se puede cerra la ventana
+            alm.setIconifiable(true);
+            panelMDI.add(alm);
+            alm.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "La ventana ya esta activa..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -439,7 +460,6 @@ public class vtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
@@ -451,6 +471,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -103,9 +104,8 @@ public class InventarioDao {
         ResultSet resultado = stm.executeQuery(sql);
         int stock = 0;
         Inventario inv = new Inventario();
-        
-        while (resultado.next()) 
-        {
+
+        while (resultado.next()) {
             inv.setIdInventario(resultado.getInt("idInventario"));
             inv.setStock(resultado.getInt("stock"));
             inv.setIdcolor(resultado.getInt("idcolor"));
@@ -116,4 +116,24 @@ public class InventarioDao {
         return inv;
     }
 
+    //Metodo que realiza el listado del kardex de inventario por almacen
+    public List<Object[]> kardexInventarioAlmacen(int idAlmacen) throws Exception {
+        iniciarOperacion();
+        Query query = sesion.createQuery("SELECT  p.codigo,p.nombre,iv.stock,c.nombre,p.stcokMinimo FROM Producto p, Inventario iv,Colores c WHERE iv.idProducto=p.idProducto and iv.idcolor=c.idColor  and iv.idAlmacen=? and iv.stock>0");
+        query.setInteger(0, idAlmacen);
+        List<Object[]> lista = query.list();
+        sesion.close();
+        return lista;
+    }
+    
+    //Metodo que realiza el listado del kardex de inventario por almacen
+    public List<Object[]> KardexProducto(int idAlmacen, String nomProd) throws Exception {
+        iniciarOperacion();
+        Query query = sesion.createQuery("SELECT  p.codigo,p.nombre,iv.stock,c.nombre,p.stcokMinimo FROM Producto p, Inventario iv,Colores c WHERE iv.idProducto=p.idProducto and iv.idAlmacen=? and  iv.idcolor=c.idColor  and p.nombre=? and iv.stock>0");
+        query.setInteger(0, idAlmacen);
+        query.setString(1, nomProd);
+        List<Object[]> lista = query.list();
+        sesion.close();
+        return lista;
+    }
 }
