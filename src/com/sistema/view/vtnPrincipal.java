@@ -69,10 +69,12 @@ public class vtnPrincipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -203,6 +205,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/almacen.png"))); // NOI18N
         jMenu2.setText("Almacen");
 
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/New document.png"))); // NOI18N
         jMenuItem1.setText("Gestion de almacen");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -211,19 +214,15 @@ public class vtnPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem1);
 
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/Notes.png"))); // NOI18N
-        jMenuItem4.setText("Ingresar productos");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem4);
-
         jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/file.png"))); // NOI18N
         jMenu7.setText("Operaciones inventario");
 
         jMenuItem8.setText("Ajustes ");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem8);
 
         jMenu2.add(jMenu7);
@@ -237,11 +236,34 @@ public class vtnPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem7);
 
+        jMenu4.setText("Ingreso inventario");
+
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/Notes.png"))); // NOI18N
+        jMenuItem4.setText("Ingresar productos");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem4);
+
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/Add-Folder-icon.png"))); // NOI18N
+        jMenuItem9.setText("Historial de ingresos");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem9);
+
+        jMenu2.add(jMenu4);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/images/producto2.png"))); // NOI18N
         jMenu3.setText("Productos");
 
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/product.png"))); // NOI18N
         jMenuItem3.setText("Gestionar producto");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -418,6 +440,27 @@ public class vtnPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+         String varValidacion = vtnHistorialIngresoProducto.validaVentana;
+        if (varValidacion == null) 
+        {
+            vtnHistorialIngresoProducto alm = new vtnHistorialIngresoProducto();
+            alm.setResizable(false);//no es redimencionable
+            alm.setMaximizable(false);//no se puede maximizar
+            alm.setClosable(true);//si se puede cerra la ventana
+            alm.setIconifiable(true);
+            panelMDI.add(alm);
+            alm.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "La ventana ya esta activa..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -460,6 +503,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
@@ -473,6 +517,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelCargo;
