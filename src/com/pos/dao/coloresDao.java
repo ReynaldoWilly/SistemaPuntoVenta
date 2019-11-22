@@ -66,4 +66,15 @@ public class coloresDao {
         sesion.close();
         return id;
     }
+    
+    public String buscarColorByNombre(int id) throws Exception {
+        iniciarOperacion();
+        Query query = sesion.createQuery("Select  c.idColor From Colores c where nombre=?");
+        query.setInteger(0, id);
+        String nombre =  (String) query.uniqueResult();
+        tx.commit();
+        sesion.close();
+        return nombre;
+    }
+    
 }

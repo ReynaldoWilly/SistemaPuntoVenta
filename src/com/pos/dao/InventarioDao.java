@@ -17,7 +17,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 /**
  *
  * @author Reynaldo
@@ -34,6 +33,7 @@ public class InventarioDao {
     }
 
     public void manejaexception(HibernateException he) {
+        
         tx.rollback();
         throw new HibernateException("Ocurrio un error en la capa de acceso a datos");
     }
@@ -119,7 +119,7 @@ public class InventarioDao {
     //Metodo que realiza el listado del kardex de inventario por almacen
     public List<Object[]> kardexInventarioAlmacen(int idAlmacen) throws Exception {
         iniciarOperacion();
-        Query query = sesion.createQuery("SELECT  p.codigo,p.nombre,iv.stock,c.nombre,p.stcokMinimo FROM Producto p, Inventario iv,Colores c WHERE iv.idProducto=p.idProducto and iv.idcolor=c.idColor  and iv.idAlmacen=? and iv.stock>0");
+        Query query = sesion.createQuery("SELECT  iv.idInventario,p.codigo,p.nombre,iv.stock,c.nombre,p.stcokMinimo FROM Producto p, Inventario iv,Colores c WHERE iv.idProducto=p.idProducto and iv.idcolor=c.idColor  and iv.idAlmacen=? and iv.stock>0");
         query.setInteger(0, idAlmacen);
         List<Object[]> lista = query.list();
         sesion.close();

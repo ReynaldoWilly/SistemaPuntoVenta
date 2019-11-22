@@ -90,12 +90,16 @@ public class vtnKardexInventario extends javax.swing.JInternalFrame {
             List<Object[]> lista = invDao.kardexInventarioAlmacen(idAlmacen);//obteniendo el listado del Kardex por Almacen
             Object[] fila = new Object[modelo.getColumnCount()];
             if (lista.size() > 0) {
-                for (int i = 0; i < lista.size(); i++) {
+                for (int i = 0; i < lista.size(); i++) 
+                {
+                    
                     fila[0] = lista.get(i)[0];//Codigo producto
                     fila[1] = lista.get(i)[1];//nombre producto
                     fila[2] = lista.get(i)[2];//stock
                     fila[3] = lista.get(i)[3];//color
                     fila[4] = lista.get(i)[4];//stock maximo
+                    fila[5] = lista.get(i)[5];//stock maximo
+                    
 //                    fila[5] = Double.parseDouble((String) lista.get(i)[5]);//precio
 //                    Double subtotal = Double.parseDouble((String) lista.get(i)[2]) * Double.parseDouble((String) lista.get(i)[5]);//subtotal
 //                    fila[6] = Operaciones.redondear(subtotal);
@@ -309,11 +313,11 @@ public class vtnKardexInventario extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "CODIGO", "PRODUCTO", "STOCK", "COLOR", "STOCK MINIMO"
+                "ID", "CODIGO", "PRODUCTO", "STOCK", "COLOR", "STOCK MINIMO"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                true, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -439,7 +443,7 @@ public class vtnKardexInventario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try {
             productoDao proDao = new productoDao();
-            Producto pro = proDao.buscarProducto2((String) tablaKardexInventario.getValueAt(tablaKardexInventario.getSelectedRow(), 1));
+            Producto pro = proDao.buscarProducto2((String) tablaKardexInventario.getValueAt(tablaKardexInventario.getSelectedRow(), 2));
             //recuperando la imagen y convirtiendo en ImageIco
             InputStream is = new ByteArrayInputStream(pro.getImagen());
             BufferedImage image = ImageIO.read(is);

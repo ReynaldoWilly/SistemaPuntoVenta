@@ -26,17 +26,25 @@ public class vtnPrincipal extends javax.swing.JFrame {
         userlogin = VtnLogin.user;//recibiendo el objeto usuario  de la ventana de logueqo
         labelUsuario.setText(userlogin.getNombres() + " " + userlogin.getApellidos());
         labelCargo.setText(userlogin.getCargo());
+        
+        //Usuario vendedor
         if (userlogin.getTipousuario() == 1) {
             labelRolUser.setText("Vendedor");
             //Habilitar opciones de vendedor
-            menuGestionUsers.setEnabled(false);
-
+            menuGestionUsuarios.setEnabled(false);//deshabilitando gestion de usuarios
+            menuGestionAlmacen.setEnabled(false);//deshabilitando gestion de almacen
+            menuOpcionesInventario.setEnabled(false);//deshabilitando ajustes de inventario
+            menuGestionProductos.setEnabled(false);//deshabilitando menu gestion productos
+            menuConfiguraciones.setEnabled(false);//deshabilitando menu configuraciones
+            
         }
-        if (userlogin.getTipousuario() == 2) {
+        if (userlogin.getTipousuario() == 2) 
+        {
             //habilitar opciones de administrador
             labelRolUser.setText("Administrador");
         }
-        if (userlogin.getTipousuario() == 3) {
+        if (userlogin.getTipousuario() == 3) 
+        {
             //habilitar los permisos para Super Usuario todos los persmisos
             labelRolUser.setText("Seper usuario");
         }
@@ -66,22 +74,22 @@ public class vtnPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuGestionUsers = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuGestionUsuarios = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu7 = new javax.swing.JMenu();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        menuGestionAlmacen = new javax.swing.JMenuItem();
+        menuOpcionesInventario = new javax.swing.JMenu();
+        menugestionAlamacen = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        menuGestionProductos = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        menuConfiguraciones = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de ventas POS");
@@ -192,40 +200,40 @@ public class vtnPrincipal extends javax.swing.JFrame {
         menuGestionUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/images/adduser.png"))); // NOI18N
         menuGestionUsers.setText("Usuarios");
 
-        jMenuItem2.setText("Gestión de usuarios");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuGestionUsuarios.setText("Gestión de usuarios");
+        menuGestionUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuGestionUsuariosActionPerformed(evt);
             }
         });
-        menuGestionUsers.add(jMenuItem2);
+        menuGestionUsers.add(menuGestionUsuarios);
 
         jMenuBar1.add(menuGestionUsers);
 
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/almacen.png"))); // NOI18N
         jMenu2.setText("Almacen");
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/New document.png"))); // NOI18N
-        jMenuItem1.setText("Gestion de almacen");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuGestionAlmacen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/New document.png"))); // NOI18N
+        menuGestionAlmacen.setText("Gestion de almacen");
+        menuGestionAlmacen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuGestionAlmacenActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        jMenu2.add(menuGestionAlmacen);
 
-        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/file.png"))); // NOI18N
-        jMenu7.setText("Operaciones inventario");
+        menuOpcionesInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/file.png"))); // NOI18N
+        menuOpcionesInventario.setText("Operaciones inventario");
 
-        jMenuItem8.setText("Ajustes ");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        menugestionAlamacen.setText("Ajustes ");
+        menugestionAlamacen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                menugestionAlamacenActionPerformed(evt);
             }
         });
-        jMenu7.add(jMenuItem8);
+        menuOpcionesInventario.add(menugestionAlamacen);
 
-        jMenu2.add(jMenu7);
+        jMenu2.add(menuOpcionesInventario);
 
         jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/factura.png"))); // NOI18N
         jMenuItem7.setText("Kardex inventario");
@@ -263,14 +271,14 @@ public class vtnPrincipal extends javax.swing.JFrame {
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/images/producto2.png"))); // NOI18N
         jMenu3.setText("Productos");
 
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/product.png"))); // NOI18N
-        jMenuItem3.setText("Gestionar producto");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menuGestionProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/menu/product.png"))); // NOI18N
+        menuGestionProductos.setText("Gestionar producto");
+        menuGestionProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menuGestionProductosActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem3);
+        jMenu3.add(menuGestionProductos);
 
         jMenuBar1.add(jMenu3);
 
@@ -295,13 +303,13 @@ public class vtnPrincipal extends javax.swing.JFrame {
         jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/ajustes.png"))); // NOI18N
         jMenu6.setText("Configuración");
 
-        jMenuItem5.setText("Parametros de sistema");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        menuConfiguraciones.setText("Parametros de sistema");
+        menuConfiguraciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                menuConfiguracionesActionPerformed(evt);
             }
         });
-        jMenu6.add(jMenuItem5);
+        jMenu6.add(menuConfiguraciones);
 
         jMenuBar1.add(jMenu6);
 
@@ -310,7 +318,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuGestionAlmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGestionAlmacenActionPerformed
         // TODO add your handling code here:
         String varValidacion = vtnAlmacen.validaVentana;
         if (varValidacion == null) {
@@ -325,9 +333,9 @@ public class vtnPrincipal extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "La ventana gestión de almacen ya esta activa..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuGestionAlmacenActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void menuGestionUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGestionUsuariosActionPerformed
         // TODO add your handling code here:
         String varValidacion = vtnUsuarios.validaVentana;
         if (varValidacion == null) {
@@ -342,9 +350,9 @@ public class vtnPrincipal extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "La ventana gestión de usuarios ya esta activa..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_menuGestionUsuariosActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void menuGestionProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGestionProductosActionPerformed
         // TODO add your handling code here:
         try {
             String varValidacion = vtnProducto.validaVentana;
@@ -364,7 +372,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error" + ex.getMessage(), "Mensaje..", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_menuGestionProductosActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
@@ -388,7 +396,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void menuConfiguracionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConfiguracionesActionPerformed
         // TODO add your handling code here:
         String varValidacion = vtnParametrosSistema.validaVentana;
         if (varValidacion == null) {
@@ -403,7 +411,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "La ventana ya esta activa..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_menuConfiguracionesActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
@@ -440,15 +448,29 @@ public class vtnPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void menugestionAlamacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menugestionAlamacenActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+        String varValidacion = vtnAjustesInventario.validaVentana;
+        if (varValidacion == null) 
+        {
+            vtnAjustesInventario alm = new vtnAjustesInventario();
+            alm.setResizable(false);//no es redimencionable
+            alm.setMaximizable(false);//no se puede maximizar
+            alm.setClosable(true);//si se puede cerra la ventana
+            
+            alm.setIconifiable(true);
+            panelMDI.add(alm);
+            alm.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "La ventana ya esta activa..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_menugestionAlamacenActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
-         String varValidacion = vtnHistorialIngresoProducto.validaVentana;
-        if (varValidacion == null) 
-        {
+        String varValidacion = vtnHistorialIngresoProducto.validaVentana;
+        if (varValidacion == null) {
             vtnHistorialIngresoProducto alm = new vtnHistorialIngresoProducto();
             alm.setResizable(false);//no es redimencionable
             alm.setMaximizable(false);//no se puede maximizar
@@ -506,24 +528,24 @@ public class vtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelCargo;
     private javax.swing.JLabel labelRolUser;
     private javax.swing.JLabel labelUsuario;
+    private javax.swing.JMenuItem menuConfiguraciones;
+    private javax.swing.JMenuItem menuGestionAlmacen;
+    private javax.swing.JMenuItem menuGestionProductos;
     private javax.swing.JMenu menuGestionUsers;
+    private javax.swing.JMenuItem menuGestionUsuarios;
+    private javax.swing.JMenu menuOpcionesInventario;
+    private javax.swing.JMenuItem menugestionAlamacen;
     public static javax.swing.JDesktopPane panelMDI;
     // End of variables declaration//GEN-END:variables
 }

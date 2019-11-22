@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    
+    <class name="com.pos.pojos.Ajustes" table="ajustesinventario">
+        <id name="idAjustes" type="java.lang.Integer">
+            <column name="idAjustes" />
+            <generator class="identity" />
+        </id>
+        
+        <property name="idProducto" type="integer">
+            <column name="idProducto" />
+        </property>
+        
+        <property name="cantidadOriginal" type="string">
+            <column name="cantidadOriginal" length="20" />
+        </property>
+        
+        <property name="cantidadAjuste" type="string">
+            <column name="cantidadAjuste" length="20" />
+        </property>
+        
+        <property name="idUsuario" type="integer">
+            <column name="idUsuario" />
+        </property>
+        
+        <property name="detalle" type="string">
+            <column name="detalle" length="600" />
+        </property>
+        
+        <property name="fecha" type="date">
+            <column name="fecha"/>
+        </property>
+        
+        
+        <property name="idAlmacen" type="integer">
+            <column name="idAlmacen" not-null="true" />
+        </property>
+
+        <property name="idColor" type="integer">
+            <column name="idColor" not-null="true" />
+        </property>
+
+        <property name="idColorAjuste" type="integer">
+            <column name="idColorAjuste" not-null="true" />
+        </property>
+
+    </class>
+</hibernate-mapping>

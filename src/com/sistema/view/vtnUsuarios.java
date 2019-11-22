@@ -26,7 +26,8 @@ public class vtnUsuarios extends javax.swing.JInternalFrame {
     public static String validaVentana;//variable que realiza la validacion de ventana abierta
     private Usuario Objetousuario = new Usuario();
 
-    public vtnUsuarios() {
+    public vtnUsuarios() 
+    {
         initComponents();
         validaVentana = "x";//insertando un valor a la variable que valida a la ventana
         /*Poniendo el JinternalFrame al centro de la ventana*/
@@ -96,8 +97,10 @@ public class vtnUsuarios extends javax.swing.JInternalFrame {
     }
 
     //Metodo que realiza el listado de los usuarios registrados
-    public void listarUsuarios() {
-        try {
+    public void listarUsuarios()
+    {
+        try 
+        {
             DefaultTableModel modelo = (DefaultTableModel) this.tablaUsuarios.getModel();//creando el modela ára llenar los datos al JTableje
             Utilitarios util = new Utilitarios();
             util.limpiarTabla(tablaUsuarios);

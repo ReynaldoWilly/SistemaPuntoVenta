@@ -60,7 +60,7 @@ public class almacenDao {
 
     public int buscarAlmacenId(String nombre) throws Exception {
         iniciarOperacion();
-        Query query = sesion.createQuery("Select  A.idAlmacen From Almacen A where nombre=?");
+        Query query = sesion.createQuery("Select  A.idAlmacen From Almacen A where nombre=? ");
         query.setString(0, nombre);
         int id = (int) query.uniqueResult();
         tx.commit();

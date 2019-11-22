@@ -96,7 +96,7 @@ public class productoDao {
     public int buscarProductoByNombre(String nombre) throws Exception {
 
         iniciarOperacion();
-        Query query = sesion.createQuery("Select c.idproducto  FROM Producto c Where nombre=?");
+        Query query = sesion.createQuery("Select c.idProducto  FROM Producto c Where nombre=?");
         query.setString(0, nombre);
         int id = (int) query.uniqueResult();
         sesion.close();
