@@ -68,7 +68,7 @@ public class productoDao {
 
     public List<Object[]> listarProductos2() throws Exception {
         iniciarOperacion();
-        Query query = sesion.createQuery("Select p.idProducto,p.nombre,p.descripcion,p.codigo, p.categoria,p.precioCompra,p.stcokMinimo,p.estado,p.medida from Producto p");
+        Query query = sesion.createQuery("Select p.idProducto,p.nombre,p.descripcion,p.codigo, p.categoria,p.precioCompra,p.precioVenta,p.stcokMinimo,p.estado,p.medida from Producto p");
         List<Object[]> lista = query.list();
         sesion.close();
         return lista;
@@ -133,11 +133,25 @@ public class productoDao {
     public List<Object[]> buscarProductoFiltroBYNombreByAlmacen(String nom) throws Exception {
         List<Object[]> resultado;
         iniciarOperacion();
-        Query query = sesion.createQuery("SELECT p.idProducto,p.nombre FROM Producto p WHERE  p.nombre like  '"+nom+"%'");
+        Query query = sesion.createQuery("SELECT p.idProducto,p.nombre FROM Producto p WHERE  p.nombre like  '" + nom + "%'");
         System.out.println(query);
         resultado = query.list();
         sesion.close();
         return resultado;
+    }
+
+    //Metodo que recupera el precio del producto
+
+    public String recuperarPrecioProducto(int id) throws Exception {
+        String precio = null;
+        iniciarOperacion();
+        Query query = sesion.createQuery("SELECT precioVenta \n"
+                + "FROM Producto \n"
+                + "Where idProducto=?");
+        query.setInteger(0, id);
+        precio = (String) query.uniqueResult();
+        sesion.close();
+        return precio;
     }
 
 }

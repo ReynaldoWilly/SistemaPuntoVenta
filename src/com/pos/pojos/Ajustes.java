@@ -21,8 +21,7 @@ public class Ajustes {
     private String detalle;
     private Date fecha;
     private int idAlmacen;
-    private int idColor;
-    private int idColorAjuste;
+  
 
     public Ajustes() {
     }
@@ -36,17 +35,9 @@ public class Ajustes {
         this.detalle = detalle;
         this.fecha = fecha;
         this.idAlmacen = idAlmacen;
-        this.idColorAjuste = idColorAjuste;
-    }
+     }
 
-    public int getIdColorAjuste() {
-        return idColorAjuste;
-    }
-
-    public void setIdColorAjuste(int idColorAjuste) {
-        this.idColorAjuste = idColorAjuste;
-    }
-
+    
     public Date getFecha() {
         return fecha;
     }
@@ -109,13 +100,5 @@ public class Ajustes {
 
     public void setIdAlmacen(int idAlmacen) {
         this.idAlmacen = idAlmacen;
-    }
-
-    public int getIdColor() {
-        return idColor;
-    }
-
-    public void setIdColor(int idColor) {
-        this.idColor = idColor;
     }
 }

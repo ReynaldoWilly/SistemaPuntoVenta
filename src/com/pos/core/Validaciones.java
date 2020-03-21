@@ -5,8 +5,14 @@
  */
 package com.pos.core;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -81,4 +87,22 @@ public class Validaciones {
         }
     }
 
+    public static BigDecimal redondear(double valor) {
+        //double valor = 1254.625;
+        String val = valor + "";
+        BigDecimal big = new BigDecimal(val);
+        big = big.setScale(1, RoundingMode.HALF_UP);
+        //System.out.println("Número : " + big);
+        return big;
+    }
+
+    //Metodo que realiza la redimension de la imagen recuperada de la BD
+    public static BufferedImage dimensionarImagen(Image srcImg, int w, int h) {
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TRANSLUCENT);
+        Graphics2D g2 = resizedImg.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+        return resizedImg;
+    }
 }

@@ -15,5 +15,9 @@
     <mapping resource="com/pos/mapeos/HistorialInventario.hbm.xml"/>
     <mapping resource="com/pos/mapeos/Inventario.hbm.xml"/>
     <mapping resource="com/pos/mapeos/Ajustes.hbm.xml"/>
+    <mapping resource="com/pos/mapeos/ComboProducto.hbm.xml"/>
+    <mapping resource="com/pos/mapeos/DetalleCombo.hbm.xml"/>
+    <mapping resource="com/pos/mapeos/Informacion.hbm.xml"/>
+    <mapping resource="com/pos/mapeos/UnidadesMedida.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

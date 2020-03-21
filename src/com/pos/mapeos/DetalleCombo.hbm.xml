@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.pos.pojos.DetalleCombo" table="detallecombo">
+        <id name="idDetalleCombo" type="integer" column="idDetalleCombo">
+            <generator class="identity"/>
+        </id>
+        
+        <property name="idProducto" type="integer" column="idProducto"/>       
+        <property name="cantidad" column="cantidad"/>
+        
+        <many-to-one name="comboproducto" class="com.pos.pojos.ComboProducto" fetch="select" >
+            <column name="idComboProducto"/>
+        </many-to-one>
+    </class>  
+</hibernate-mapping>

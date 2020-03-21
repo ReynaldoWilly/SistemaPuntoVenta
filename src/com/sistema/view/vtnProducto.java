@@ -6,8 +6,10 @@
 package com.sistema.view;
 
 import com.pos.core.Validaciones;
+import com.pos.dao.UnidadesMedidaDao;
 import com.pos.dao.productoDao;
 import com.pos.pojos.Producto;
+import com.pos.pojos.UnidadesMedida;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -21,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,6 +49,7 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         /*fin-----*/
 
         listarDatos();
+        cargarComboUnidades();
         bloquearCamposProducto();
 
     }
@@ -56,6 +60,7 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         txtDesPro.setText("");
         txtImgProducto.setText("");
         txtPrecioPro.setText("0");
+        txtPrecioVenta.setText("0");
     }
 
     //Metodo que bloquea los campos de texto
@@ -73,6 +78,7 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(false);
         comboUnidades.setEnabled(false);
         txtPrecioPro.setEnabled(false);
+        txtPrecioVenta.setEnabled(false);
         //--------botones de accion-----
         btnEdicion.setEnabled(true);
         btnNuevo.setEnabled(true);
@@ -95,6 +101,21 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         txtPrecioPro.setEnabled(true);
         txtStockMinimo.setEnabled(true);
         comboUnidades.setEnabled(true);
+        txtPrecioVenta.setEnabled(true);
+    }
+
+    public void cargarComboUnidades() {
+        UnidadesMedidaDao cdao = new UnidadesMedidaDao();
+        try {
+            //realizando la consulta para realizar el listado de los datos
+            List<UnidadesMedida> lista = cdao.listarUnidades();
+            for (int i = 0; i < lista.size(); i++) {
+                comboUnidades.addItem(lista.get(i).getNombre());
+                // System.err.println(lista.get(i).getNombre());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error " + e, null, JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void limpiarTabla(JTable tabla) {
@@ -126,9 +147,10 @@ public class vtnProducto extends javax.swing.JInternalFrame {
                 fila[3] = lista.get(i)[3];//codigo
                 fila[4] = lista.get(i)[4];//categoria
                 fila[5] = lista.get(i)[5];//precio compra
-                fila[6] = lista.get(i)[6];//sctok
-                fila[7] = lista.get(i)[7];//estado
-                fila[8] = lista.get(i)[8];//medida
+                fila[6] = lista.get(i)[6];//precio venta
+                fila[7] = lista.get(i)[7];//sctok
+                fila[8] = lista.get(i)[8];//estado
+                fila[9] = lista.get(i)[9];//medida
 
                 modelo.addRow(fila);
             }
@@ -179,6 +201,8 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         txtPrecioPro = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         txtStockMinimo = new javax.swing.JSpinner();
+        jLabel14 = new javax.swing.JLabel();
+        txtPrecioVenta = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnRegPro = new javax.swing.JButton();
@@ -199,6 +223,7 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
 
+        setTitle("Gestión de productos");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -254,6 +279,8 @@ public class vtnProducto extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jTabbedPane1.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
+
         jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -296,13 +323,13 @@ public class vtnProducto extends javax.swing.JInternalFrame {
 
         txtCodigoPro.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         jLabel7.setText("Estado:");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         jLabel8.setText("Categoria:");
 
-        comboCategoria.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
+        comboCategoria.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         comboCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-----------------------", "Muebles clinicos", "Oficina", "Estanteria", "Sillas" }));
 
         GrupoEstadoProducto.add(RacPro);
@@ -313,11 +340,11 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         RacInac.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         RacInac.setText("Inactivo");
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         jLabel16.setText("Unidad de medida:");
 
-        comboUnidades.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
-        comboUnidades.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "------------------", "Pieza", "Metros" }));
+        comboUnidades.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        comboUnidades.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "------------------" }));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -436,10 +463,10 @@ public class vtnProducto extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("General", jPanel5);
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel12.setText("Precio de compra:");
 
-        txtPrecioPro.setFont(new java.awt.Font("Calibri", 0, 13)); // NOI18N
+        txtPrecioPro.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         txtPrecioPro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtPrecioPro.setText("0.0");
         txtPrecioPro.setToolTipText("Ingrese el precio de compra del producto.");
@@ -449,11 +476,18 @@ public class vtnProducto extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel13.setText("Stock minimo:");
 
         txtStockMinimo.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         txtStockMinimo.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10000, 1));
+
+        jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jLabel14.setText("Precio venta:");
+
+        txtPrecioVenta.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
+        txtPrecioVenta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtPrecioVenta.setText("0.0");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -462,16 +496,15 @@ public class vtnProducto extends javax.swing.JInternalFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPrecioPro))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtStockMinimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(188, 188, 188))
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtPrecioPro)
+                    .addComponent(txtStockMinimo)
+                    .addComponent(txtPrecioVenta))
+                .addContainerGap(158, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -480,11 +513,15 @@ public class vtnProducto extends javax.swing.JInternalFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(txtPrecioPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(17, 17, 17)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(txtStockMinimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(395, Short.MAX_VALUE))
+                .addContainerGap(362, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Costos", jPanel8);
@@ -686,25 +723,25 @@ public class vtnProducto extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        tablaProductos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tablaProductos.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "NOMBRE", "DESCRIPCION", "CODIGO", "CATEGORIA", "PRECIO COMPRA", "SCTOK MIN", "ESTADO", "MEDIDA"
+                "ID", "NOMBRE", "DESCRIPCION", "CODIGO", "CATEGORIA", "PRECIO COMPRA", "PRECIO VENTA", "SCTOK MIN", "ESTADO", "MEDIDA"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true, false, true
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tablaProductos.setGridColor(new java.awt.Color(0, 51, 51));
         tablaProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tablaProductosMousePressed(evt);
@@ -781,7 +818,9 @@ public class vtnProducto extends javax.swing.JInternalFrame {
 
     private void lbmProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbmProductoMousePressed
         // TODO add your handling code here:
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         JFileChooser abrir = new JFileChooser();
+        abrir.setFileFilter(filtroImagen);
         abrir.setDialogTitle("Seleccionar imagen..");
         int ventana = abrir.showOpenDialog(null);
         if (ventana == JFileChooser.APPROVE_OPTION) {
@@ -799,14 +838,13 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         habilitarCamposProducto();
         limpiarCampos();
         RacPro.setSelected(true);
-        tablaProductos.setEnabled(false);
+        tablaProductos.setEnabled(true);
         btnEdicion.setEnabled(false);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnRegProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegProActionPerformed
         // TODO add your handling code here:
-        try 
-        {
+        try {
             //Iniciando la validacion de campos vacios
             List<String> validar = new ArrayList<>();
             validar.add(txtCodigoPro.getText());
@@ -814,6 +852,7 @@ public class vtnProducto extends javax.swing.JInternalFrame {
             validar.add(txtImgProducto.getText());
             validar.add(txtNomPro.getText());
             validar.add(txtPrecioPro.getText());
+            validar.add(txtPrecioVenta.getText());
 
             if (Validaciones.validarCampos(validar)) {
                 File archivoImagen = new File(txtImgProducto.getText());//recuperando la url de la imagen
@@ -833,7 +872,8 @@ public class vtnProducto extends javax.swing.JInternalFrame {
                 pro.setNombre(txtNomPro.getText());//nombre producto
                 pro.setDescripcion(txtDesPro.getText());//descripcion
                 pro.setCodigo(txtCodigoPro.getText());//codigo
-                pro.setPrecioCompra(txtPrecioPro.getText());//precio
+                pro.setPrecioCompra(txtPrecioPro.getText());//precio compra
+                pro.setPrecioVenta(txtPrecioVenta.getText());//precio venta del producto
                 pro.setCategoria(comboCategoria.getSelectedItem().toString());
                 pro.setStcokMinimo(Integer.parseInt(txtStockMinimo.getValue().toString()));
                 pro.setImagen(bytefile);
@@ -891,41 +931,71 @@ public class vtnProducto extends javax.swing.JInternalFrame {
             List<String> validar = new ArrayList<>();
             validar.add(txtCodigoPro.getText());
             validar.add(txtDesPro.getText());
-            validar.add(txtImgProducto.getText());
             validar.add(txtNomPro.getText());
             validar.add(txtPrecioPro.getText());
+            validar.add(txtPrecioVenta.getText());
+
+            Producto pro = this.getObjProducto();//recuperando el objeto recuperado desde la tabla
+            productoDao proDao = new productoDao();
 
             if (Validaciones.validarCampos(validar)) {
-                File archivoImagen = new File(txtImgProducto.getText());//recuperando la url de la imagen
-                byte[] bytefile = new byte[(int) archivoImagen.length()];
-                FileInputStream fs = new FileInputStream(archivoImagen);
-                fs.read(bytefile);
-                fs.close();
+                if (lbmProducto.getText().length() > 0) {
+                    pro.setNombre(txtNomPro.getText());
+                    pro.setDescripcion(txtDesPro.getText());
+                    pro.setPrecioCompra(txtPrecioPro.getText());
+                    pro.setPrecioVenta(txtPrecioVenta.getText());
+                    pro.setCodigo(txtCodigoPro.getText());
+                    pro.setStcokMinimo(Integer.parseInt(txtStockMinimo.getValue().toString()));
+                    pro.setCategoria(comboCategoria.getSelectedItem().toString());
+                    //recuperando la nueva imagen a actualizar
+                    File archivoImagen = new File(txtImgProducto.getText());//recuperando la url de la imagen
+                    byte[] bytefile = new byte[(int) archivoImagen.length()];
+                    FileInputStream fs = new FileInputStream(archivoImagen);
+                    fs.read(bytefile);
+                    fs.close();
+                    pro.setImagen(bytefile);
+                    //fin de la actualizacion de la imagen
 
-                Producto pro = this.getObjProducto();//recuperando el objeto recuperado desde la tabla
-                pro.setNombre(txtNomPro.getText());
-                pro.setDescripcion(txtDesPro.getText());
-                pro.setPrecioCompra(txtPrecioPro.getText());
-                pro.setCodigo(txtCodigoPro.getText());
-                pro.setStcokMinimo(Integer.parseInt(txtStockMinimo.getValue().toString()));
-                pro.setCategoria(comboCategoria.getSelectedItem().toString());
-                pro.setImagen(bytefile);
+                    String estado = "";
+                    if (RacPro.isSelected()) {
+                        estado = "Activo";
+                    } else if (RacInac.isSelected()) {
+                        estado = "Inactivo";
+                    }
 
-                String estado = "";
-                if (RacPro.isSelected()) {
-                    estado = "Activo";
-                } else if (RacInac.isSelected()) {
-                    estado = "Inactivo";
+                    pro.setEstado(estado);
+
+                    if (proDao.actualizarProducto(pro)) {
+                        JOptionPane.showMessageDialog(this, "Actualización correcta", null, JOptionPane.INFORMATION_MESSAGE);
+                        limpiarCampos();
+                        bloquearCamposProducto();
+                        listarDatos();
+                    }
+                } else {
+                    pro.setNombre(txtNomPro.getText());
+                    pro.setDescripcion(txtDesPro.getText());
+                    pro.setPrecioCompra(txtPrecioPro.getText());
+                    pro.setPrecioVenta(txtPrecioVenta.getText());
+                    pro.setCodigo(txtCodigoPro.getText());
+                    pro.setStcokMinimo(Integer.parseInt(txtStockMinimo.getValue().toString()));
+                    pro.setCategoria(comboCategoria.getSelectedItem().toString());
+                    String estado = "";
+
+                    if (RacPro.isSelected()) {
+                        estado = "Activo";
+                    } else if (RacInac.isSelected()) {
+                        estado = "Inactivo";
+                    }
+                    pro.setEstado(estado);
+
+                    if (proDao.actualizarProducto(pro)) {
+                        JOptionPane.showMessageDialog(this, "Actualización correcta", null, JOptionPane.INFORMATION_MESSAGE);
+                        limpiarCampos();
+                        bloquearCamposProducto();
+                        listarDatos();
+                    }
                 }
-                pro.setEstado(estado);
 
-                productoDao proDao = new productoDao();
-                if (proDao.actualizarProducto(pro)) {
-                    JOptionPane.showMessageDialog(this, "Actualización correcta", null, JOptionPane.INFORMATION_MESSAGE);
-                    limpiarCampos();
-                    bloquearCamposProducto();
-                    listarDatos();
-                }
             } else {
                 JOptionPane.showMessageDialog(this, "Faltan campos por llenar..!!", null, JOptionPane.WARNING_MESSAGE);
             }
@@ -968,6 +1038,7 @@ public class vtnProducto extends javax.swing.JInternalFrame {
             txtNomPro.setText(pro.getNombre());
             txtDesPro.setText(pro.getDescripcion());
             txtPrecioPro.setText(pro.getPrecioCompra());
+            txtPrecioVenta.setText(pro.getPrecioVenta());
             txtCodigoPro.setText(pro.getCodigo());
             txtStockMinimo.setValue(pro.getStcokMinimo());
             lbmProducto.setText("");
@@ -984,6 +1055,7 @@ public class vtnProducto extends javax.swing.JInternalFrame {
             } else if (pro.getEstado().equals("Inactivo")) {
                 RacInac.setSelected(true);
             }
+            comboUnidades.setSelectedItem(pro.getMedida().toString());
 
             String tipo = String.valueOf(tm.getValueAt(tablaProductos.getSelectedRow(), 4));
             comboCategoria.setSelectedItem(tipo);
@@ -1092,6 +1164,7 @@ public class vtnProducto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
@@ -1123,6 +1196,7 @@ public class vtnProducto extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtImgProducto;
     private javax.swing.JTextField txtNomPro;
     private javax.swing.JTextField txtPrecioPro;
+    private javax.swing.JTextField txtPrecioVenta;
     private javax.swing.JSpinner txtStockMinimo;
     // End of variables declaration//GEN-END:variables
 

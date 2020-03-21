@@ -41,13 +41,7 @@
             <column name="idAlmacen" not-null="true" />
         </property>
 
-        <property name="idColor" type="integer">
-            <column name="idColor" not-null="true" />
-        </property>
-
-        <property name="idColorAjuste" type="integer">
-            <column name="idColorAjuste" not-null="true" />
-        </property>
+       
 
     </class>
 </hibernate-mapping>

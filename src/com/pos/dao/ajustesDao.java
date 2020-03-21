@@ -55,9 +55,9 @@ public class ajustesDao {
     //Metodo que realiza el listado del kardex de inventario por almacen
     public List<Object[]> listarAjustes() throws Exception {
         iniciarOperacion();
-        Query query = sesion.createQuery("SELECT a.idAjustes, p.nombre,a.cantidadOriginal,a.cantidadAjuste, u.nombres,u.apellidos,a.detalle, a.fecha, al.nombre,c.nombre\n"
-                + "FROM Ajustes as a, Producto as p, Usuario as u, Almacen as al,Colores as c\n"
-                + "WHERE a.idProducto=p.idProducto and a.idUsuario=u.idUsuario and a.idAlmacen=al.idAlmacen and a.idColor=c.idColor");
+        Query query = sesion.createQuery("SELECT a.idAjustes, p.nombre,a.cantidadOriginal,a.cantidadAjuste, u.nombres,u.apellidos,a.detalle, a.fecha, al.nombre\n"
+                + "FROM Ajustes as a, Producto as p, Usuario as u, Almacen as al\n"
+                + "WHERE a.idProducto=p.idProducto and a.idUsuario=u.idUsuario and a.idAlmacen=al.idAlmacen");
         List<Object[]> lista = query.list();
         sesion.close();
         return lista;
@@ -76,14 +76,13 @@ public class ajustesDao {
     }
 
     //Metodo que realiza el ajuste en la BD
-    public boolean realizarAjusteInventario(int cantidadAjuste, int idColorAjuste, int idInventario) {
+    public boolean realizarAjusteInventario(int cantidadAjuste, int idInventario) {
         iniciarOperacion();
         Query query = sesion.createQuery("UPDATE Inventario\n"
-                + "SET stock=?, idcolor=?\n"
+                + "SET stock=?\n"
                 + "WHERE idInventario=? ");
         query.setInteger(0, cantidadAjuste);
-        query.setInteger(1, idColorAjuste);
-        query.setInteger(2, idInventario);
+        query.setInteger(1, idInventario);
         query.executeUpdate();
         sesion.close();
         return true;

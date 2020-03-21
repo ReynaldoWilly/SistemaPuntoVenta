@@ -47,9 +47,7 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
         int b = vtnPrincipal.panelMDI.getHeight() - this.getHeight();
         setLocation(a / 2, b / 2);
         cargarAlmacen();
-        cargarComboColores();
-        comboAjusteColor.setEnabled(false);
-        comboCantidadAjuste.setEnabled(false);
+        //cargarComboColores();
         Objetousuario = vtnPrincipal.userlogin;
         listarAjustes();
 
@@ -68,23 +66,25 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
 
         //Fin de los valores de los Spinners
     }
-
-    public void cargarComboColores() {
-        coloresDao cdao = new coloresDao();
-        try {
-            //realizando la consulta para realizar el listado de los datos
-            List<Colores> lista = cdao.listarColores();
-            for (int i = 0; i < lista.size(); i++) {
-                comboAjusteColor.addItem(lista.get(i).getNombre());
-                comboCantidadAjuste.addItem(lista.get(i).getNombre());
-                // System.err.println(lista.get(i).getNombre());
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error " + e, null, JOptionPane.ERROR_MESSAGE);
-        }
-    }
+    /*
+     public void cargarComboColores() {
+     coloresDao cdao = new coloresDao();
+     try {
+     //realizando la consulta para realizar el listado de los datos
+     List<Colores> lista = cdao.listarColores();
+     for (int i = 0; i < lista.size(); i++) {
+     comboAjusteColor.addItem(lista.get(i).getNombre());
+     comboCantidadAjuste.addItem(lista.get(i).getNombre());
+     // System.err.println(lista.get(i).getNombre());
+     }
+     } catch (Exception e) {
+     JOptionPane.showMessageDialog(null, "Error " + e, null, JOptionPane.ERROR_MESSAGE);
+     }
+     }
+     */
 
     //Metodo que carga los elementos del almacen
+
     public void cargarAlmacen() {
         try {
             almacenDao almDao = new almacenDao();
@@ -132,7 +132,6 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
                 fila[6] = lista.get(i)[6];//glosa
                 fila[7] = lista.get(i)[7];//fecha
                 fila[8] = lista.get(i)[8];//almacen
-                fila[9] = lista.get(i)[9];//color
 
                 modelo.addRow(fila);
             }
@@ -226,7 +225,6 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         txtAjusteProducto = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtdetalleajuste = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JSpinner();
         jLabel12 = new javax.swing.JLabel();
@@ -234,10 +232,8 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
         jPanel4 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jLabel13 = new javax.swing.JLabel();
-        comboAjusteColor = new javax.swing.JComboBox();
-        jLabel14 = new javax.swing.JLabel();
-        comboCantidadAjuste = new javax.swing.JComboBox();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtdetalleajuste = new javax.swing.JTextArea();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaAjustes = new javax.swing.JTable();
@@ -422,9 +418,6 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel6.setText("Detalle:");
 
-        txtdetalleajuste.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        txtdetalleajuste.setToolTipText("Ingrese el detalle del ajuste de inentario..");
-
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel9.setText("Cantidad:");
 
@@ -483,15 +476,9 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
                 .addGap(26, 26, 26))
         );
 
-        jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        jLabel13.setText("Color:");
-
-        comboAjusteColor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "******" }));
-
-        jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
-        jLabel14.setText("Color ajuste:");
-
-        comboCantidadAjuste.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "******" }));
+        txtdetalleajuste.setColumns(20);
+        txtdetalleajuste.setRows(5);
+        jScrollPane3.setViewportView(txtdetalleajuste);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -502,21 +489,9 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtdetalleajuste))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtAjusteProducto))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(25, 25, 25)
-                        .addComponent(comboAjusteColor, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboCantidadAjuste, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -524,7 +499,11 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel12)
                         .addGap(18, 18, 18)
-                        .addComponent(txtCanAjuste, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtCanAjuste, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -540,17 +519,13 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
                     .addComponent(txtCanAjuste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(comboAjusteColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14)
-                    .addComponent(comboCantidadAjuste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtdetalleajuste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(38, 38, 38)))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -596,11 +571,11 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "PRODUCTO", "CANT. ORIGINAL", "CANT. AJUSTE", "NOMBRE", "APELLIDO", "GLOSA", "FECHA", "ALMACEN", "COLOR ORIGINAL", "COLOR AJUSTE"
+                "ID", "PRODUCTO", "CANT. ORIGINAL", "CANT. AJUSTE", "NOMBRE", "APELLIDO", "GLOSA", "FECHA", "ALMACEN"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, true, true, true
+                false, false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -694,7 +669,7 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -768,12 +743,6 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
                 txtCanAjuste.requestFocusInWindow();
                 return;
             }
-            //Valida el color de ajuste 
-            if (comboCantidadAjuste.getSelectedIndex() == 0) {
-                JOptionPane.showMessageDialog(null, "Seleccione el color..!!", "Mensaje", JOptionPane.ERROR_MESSAGE);
-                comboCantidadAjuste.requestFocusInWindow();
-                return;
-            }
 
             Ajustes ajuste = new Ajustes();
             ajuste.setIdProducto(new productoDao().buscarProductoByNombre(txtAjusteProducto.getText()));//idProducto
@@ -788,17 +757,14 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
             ajuste.setFecha(sqldate);
 
             ajuste.setIdAlmacen(new almacenDao().buscarAlmacenId(comboAlmacen.getSelectedItem().toString()));//idAlmacen
-            ajuste.setIdColor(new coloresDao().buscarColorById(comboAjusteColor.getSelectedItem().toString()));
-            ajuste.setIdColorAjuste(new coloresDao().buscarColorById(comboCantidadAjuste.getSelectedItem().toString()));
 
             ajustesDao ajDao = new ajustesDao();
+            
 
-            if (ajDao.registarAjuste(ajuste) && ajDao.realizarAjusteInventario((Integer) txtCanAjuste.getValue(), new coloresDao().buscarColorById(comboCantidadAjuste.getSelectedItem().toString()), _idInventario)) {
+            if (ajDao.registarAjuste(ajuste) && ajDao.realizarAjusteInventario((Integer) txtCanAjuste.getValue(),  _idInventario)) {
                 JOptionPane.showMessageDialog(null, "Ajuste realizado correctamente..!!", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
                 listarAjustes();
                 limpiarCampos();
-                comboAjusteColor.setSelectedIndex(0);
-                comboCantidadAjuste.setSelectedIndex(0);
             }
 
             //fin del registro del ajuste
@@ -861,8 +827,6 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
                 txtCantidad.setValue(Integer.parseInt(stock));
                 coloresDao cDao = new coloresDao();
                 String color = tablaProductoAjuste.getValueAt(tablaProductoAjuste.getSelectedRow(), 4).toString();
-                comboAjusteColor.setSelectedItem(color);
-                comboCantidadAjuste.setEnabled(true);
 
                 _idInventario = Integer.parseInt(tablaProductoAjuste.getValueAt(tablaProductoAjuste.getSelectedRow(), 0).toString());
 
@@ -902,10 +866,8 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog DialogoProductos;
-    private javax.swing.JComboBox comboAjusteColor;
     private javax.swing.JComboBox comboAlmacen;
     private javax.swing.JComboBox comboAlmacenTabla;
-    private javax.swing.JComboBox comboCantidadAjuste;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -916,8 +878,6 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -934,11 +894,12 @@ public class vtnAjustesInventario extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable tablaAjustes;
     private javax.swing.JTable tablaProductoAjuste;
     public static javax.swing.JTextField txtAjusteProducto;
     private javax.swing.JSpinner txtCanAjuste;
     public static javax.swing.JSpinner txtCantidad;
-    private javax.swing.JTextField txtdetalleajuste;
+    private javax.swing.JTextArea txtdetalleajuste;
     // End of variables declaration//GEN-END:variables
 }

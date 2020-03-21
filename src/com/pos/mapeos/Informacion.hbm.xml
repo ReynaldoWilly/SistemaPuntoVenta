@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.pos.pojos.Informacion" table="parametrossis">
+        <id name="idParametros" type="java.lang.Integer">
+            <column name="idParametrosSis" />
+            <generator class="identity" />
+        </id>
+        
+        <property name="razonSocial" type="string">
+            <column name="razonSocial" length="150" />
+        </property>
+        
+        <property name="nit" type="string">
+            <column name="nit" length="50" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="180"/>
+        </property>
+        <property name="fono" type="string">
+            <column name="telefono" length="15" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" />
+        </property>
+        <property name="fax" type="string">
+            <column name="fax" length="15" />
+        </property>  
+        <property name="logo" type="binary">
+            <column name="logo" />
+        </property>
+        
+        <property name="web" type="string">
+            <column name="web" length="15" />
+        </property>  
+           
+    </class>
+</hibernate-mapping>

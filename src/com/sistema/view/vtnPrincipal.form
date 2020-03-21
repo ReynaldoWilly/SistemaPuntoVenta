@@ -143,10 +143,21 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/pos/iconos/menu/Add-Folder-icon.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Lista de precios"/>
+                <Property name="text" type="java.lang.String" value="Combo producto"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem6ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/pos/iconos/menu/Money-icon.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Ventas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -169,6 +180,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="menuConfiguraciones">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/pos/iconos/menu/Settings.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Parametros de sistema"/>
               </Properties>
               <Events>

@@ -20,6 +20,7 @@ public class Producto implements Serializable{
     private byte[] imagen;
     private String categoria;
     private String precioCompra;
+    private String precioVenta;
     private int stcokMinimo;
     private String estado;
     private String medida;
@@ -105,5 +106,13 @@ public class Producto implements Serializable{
 
     public void setMedida(String medida) {
         this.medida = medida;
+    }
+
+    public String getPrecioVenta() {
+        return precioVenta;
+    }
+
+    public void setPrecioVenta(String precioVenta) {
+        this.precioVenta = precioVenta;
     }
 }

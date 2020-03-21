@@ -11,14 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Reynaldo
- */
 public class VtnLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form VtnPrincipal
+     * 
      */
     public static Usuario user;
 
@@ -26,7 +23,6 @@ public class VtnLogin extends javax.swing.JFrame {
         initComponents();
         this.setResizable(false);//no redimensionable
         this.setLocationRelativeTo(null);//localizacion al centro de la pantalla
-
     }
 
     /**
@@ -173,19 +169,22 @@ public class VtnLogin extends javax.swing.JFrame {
         try {
             user = userDao.buscarUsuario(txtUser.getText(), txtPass.getText());
 
-            if (user != null) {
+            if (user != null) 
+            
+            {
                 vtnPrincipal principal = new vtnPrincipal();
                 principal.setVisible(true);
                 this.dispose();//ocultando la ventana
-            } else {
+            }
+            else 
+            {
                 JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", null, JOptionPane.ERROR_MESSAGE);
             }
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error-->" + ex.getMessage(), null, JOptionPane.ERROR_MESSAGE);
+        } 
+        catch (Exception ex) 
+        {
+            JOptionPane.showMessageDialog(this, "ERROR AL CONECTAR CON LA BASE DE DATOS..!!" + ex.getMessage(), null, JOptionPane.ERROR_MESSAGE);
         }
-
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
