@@ -44,7 +44,6 @@ public class ComboDao {
     }
 
     //Metodo que verifica si el codigo ingresado ya esta registrado 
-
     public boolean buscarCodigo(String codigo) {
         ComboProducto cm = null;
         Producto pro = null;
@@ -67,6 +66,14 @@ public class ComboDao {
     }
 
     public List<Object[]> listarProductos() throws Exception {
+        iniciarOperacion();
+        Query query = sesion.createQuery("Select p.idProducto,p.nombre from Producto p");
+        List<Object[]> lista = query.list();
+        sesion.close();
+        return lista;
+    }
+
+    public List<Object[]> listarProductosByAlmacen() throws Exception {
         iniciarOperacion();
         Query query = sesion.createQuery("Select p.idProducto,p.nombre from Producto p");
         List<Object[]> lista = query.list();

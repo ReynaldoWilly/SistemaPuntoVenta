@@ -37,6 +37,11 @@
         <property name="web" type="string">
             <column name="web" length="15" />
         </property>  
-           
+        <property name="impuestos" type="string">
+            <column name="impuestos" length="20" />
+        </property>  
+        <property name="descuentos" type="string">
+            <column name="descuentos" length="20" />
+        </property>     
     </class>
 </hibernate-mapping>

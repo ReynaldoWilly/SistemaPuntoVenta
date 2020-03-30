@@ -103,6 +103,8 @@ public class productoDao {
         return id;
     }
 
+    
+
     public Producto buscarProducto2(String nom) throws Exception {
         Producto pro = null;
         iniciarOperacion();
@@ -140,8 +142,21 @@ public class productoDao {
         return resultado;
     }
 
-    //Metodo que recupera el precio del producto
+    //Metodo que realiza la busqueda de busqueda para tabla modulo de ventas (IDINVENTARIO, NOMBREPRODUCTO,COLOR,STOCK)
+    public List<Object[]> buscarProductoFiltroBYNombreByAlmacenModVentas(int idAlmacen, String nom) throws Exception {
+        List<Object[]> resultado;
+        iniciarOperacion();
+        Query query = sesion.createQuery("SELECT iv.idInventario,p.nombre,c.nombre,iv.stock  \n"
+                + "FROM Producto p, Inventario iv, Colores c \n"
+                + "WHERE  p.nombre like  '" + nom + "%' and iv.idProducto=p.idProducto and iv.idcolor=c.idColor  and iv.idAlmacen=? and iv.stock>0");
+        query.setInteger(0, idAlmacen);
+        System.out.println(query);
+        resultado = query.list();
+        sesion.close();
+        return resultado;
+    }
 
+    //Metodo que recupera el precio del producto
     public String recuperarPrecioProducto(int id) throws Exception {
         String precio = null;
         iniciarOperacion();

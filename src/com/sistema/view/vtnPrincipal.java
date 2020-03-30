@@ -73,6 +73,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         menuGestionUsers = new javax.swing.JMenu();
         menuGestionUsuarios = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         menuGestionAlmacen = new javax.swing.JMenuItem();
         menuOpcionesInventario = new javax.swing.JMenu();
@@ -186,7 +187,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
             .addGroup(panelMDILayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(268, Short.MAX_VALUE))
         );
         panelMDI.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -206,6 +207,14 @@ public class vtnPrincipal extends javax.swing.JFrame {
             }
         });
         menuGestionUsers.add(menuGestionUsuarios);
+
+        jMenuItem2.setText("Gestión de clientes");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        menuGestionUsers.add(jMenuItem2);
 
         jMenuBar1.add(menuGestionUsers);
 
@@ -513,6 +522,23 @@ public class vtnPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        String varValidacion = vtnCliente.validaVentana;
+        if (varValidacion == null) {
+            vtnCliente alm = new vtnCliente();
+            alm.setTitle("Gestión de clientes..::..::.. ");
+            alm.setResizable(false);//no es redimencionable
+            alm.setMaximizable(false);//no se puede maximizar
+            alm.setClosable(true);//si se puede cerra la ventana
+            alm.setIconifiable(true);
+            panelMDI.add(alm);
+            alm.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "La ventana gestión de clientes ya esta activa..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -561,6 +587,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;

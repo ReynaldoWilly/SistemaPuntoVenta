@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.pos.pojos.Cliente" table="clientes">
+        <id name="idCliente" type="java.lang.Integer">
+            <column name="idCliente" />
+            <generator class="identity" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="40" not-null="true" />
+        </property>
+        <property name="ci" type="string">
+            <column name="ci" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="40" />
+        </property>
+        <property name="celContacto" type="string">
+            <column name="celContacto" length="40"/>
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="40"/>
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion"  length="40"/>
+        </property>
+        <property name="credito" type="string">
+            <column name="credito"  length="15"/>
+        </property>
+        <property name="plazo" type="string">
+            <column name="plazoCredito"  length="10"/>
+        </property>
+        
+        <property name="estado" type="string">
+            <column name="estado"  length="20"/>
+        </property>
+        
+    </class>
+</hibernate-mapping>

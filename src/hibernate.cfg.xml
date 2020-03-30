@@ -19,5 +19,6 @@
     <mapping resource="com/pos/mapeos/DetalleCombo.hbm.xml"/>
     <mapping resource="com/pos/mapeos/Informacion.hbm.xml"/>
     <mapping resource="com/pos/mapeos/UnidadesMedida.hbm.xml"/>
+    <mapping resource="com/pos/mapeos/Cliente.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

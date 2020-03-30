@@ -3,8 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Reynaldo/Documents/NetBeansProjects/SistemaPuntoVenta/src/hibernate.cfg.xml</file>
-            <file>file:/C:/Users/Reynaldo/Documents/NetBeansProjects/SistemaPuntoVenta/src/com/sistema/view/vtnParametrosSistema.java</file>
+            <file>file:/C:/Users/Reynaldo/Documents/NetBeansProjects/SistemaPuntoVenta/src/com/pos/dao/almacenDao.java</file>
+            <file>file:/C:/Users/Reynaldo/Documents/NetBeansProjects/SistemaPuntoVenta/src/com/pos/core/Validaciones.java</file>
             <file>file:/C:/Users/Reynaldo/Documents/NetBeansProjects/SistemaPuntoVenta/src/com/sistema/view/vtnVentas.java</file>
         </group>
     </open-files>

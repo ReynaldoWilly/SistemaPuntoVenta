@@ -425,7 +425,8 @@ public class vtnKardexInventario extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try {
+        try 
+        {
             if (comboAlmacen.getSelectedIndex() > 0) {
                 almacenDao almDao = new almacenDao();
                 listarDatosKardex(almDao.buscarAlmacenId(comboAlmacen.getSelectedItem().toString()));

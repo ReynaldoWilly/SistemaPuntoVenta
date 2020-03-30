@@ -22,6 +22,8 @@ public class Informacion implements Serializable {
     private String fax;
     private byte[] logo;
     private String web;
+    private String impuestos;
+    private String descuentos;
 
     public byte[] getLogo() {
         return logo;
@@ -99,5 +101,21 @@ public class Informacion implements Serializable {
 
     public void setWeb(String web) {
         this.web = web;
+    }
+
+    public String getImpuestos() {
+        return impuestos;
+    }
+
+    public void setImpuestos(String impuestos) {
+        this.impuestos = impuestos;
+    }
+
+    public String getDescuentos() {
+        return descuentos;
+    }
+
+    public void setDescuentos(String descuentos) {
+        this.descuentos = descuentos;
     }
 }

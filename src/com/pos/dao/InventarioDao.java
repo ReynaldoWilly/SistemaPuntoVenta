@@ -125,6 +125,15 @@ public class InventarioDao {
         sesion.close();
         return lista;
     }
+    //Metodo que realiza la consulta HQL para el modulo de ventas ventana escoja producto 
+     public List<Object[]> kardexInventarioByAlmacenForVentas(int idAlmacen) throws Exception {
+        iniciarOperacion();
+        Query query = sesion.createQuery("SELECT  iv.idInventario,p.nombre,c.nombre,iv.stock FROM Producto p, Inventario iv,Colores c WHERE iv.idProducto=p.idProducto and iv.idcolor=c.idColor  and iv.idAlmacen=? and iv.stock>0");
+        query.setInteger(0, idAlmacen);
+        List<Object[]> lista = query.list();
+        sesion.close();
+        return lista;
+    }
     
     //Metodo que realiza el listado del kardex de inventario por almacen
     public List<Object[]> KardexProducto(int idAlmacen, String nomProd) throws Exception {
