@@ -42,6 +42,7 @@ public class vtnAlmacen extends javax.swing.JInternalFrame {
         btnCanAlm.setEnabled(false);
         btnActualizar.setEnabled(false);
         btnEliminar.setEnabled(false);
+        Validaciones.mejorarAparienciaTabla(tablaAlamacen);
 
     }
 //Metodo que bloquea los campos de texto

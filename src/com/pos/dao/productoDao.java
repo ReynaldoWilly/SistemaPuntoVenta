@@ -59,7 +59,7 @@ public class productoDao {
 
     public List<Object[]> listarProductosCategoria(String categoria) throws Exception {
         iniciarOperacion();
-        Query query = sesion.createQuery("Select p.idProducto,p.nombre,p.descripcion,p.codigo, p.categoria,p.precioCompra,p.stcokMinimo,p.estado,p.medida from Producto p where p.categoria=?");
+        Query query = sesion.createQuery("Select p.idProducto,p.nombre,p.descripcion,p.codigo, p.categoria,p.precioCompra,p.precioVenta,p.stcokMinimo,p.estado,p.medida from Producto p where p.categoria=?");
         query.setString(0, categoria);
         List<Object[]> lista = query.list();
         sesion.close();
@@ -76,7 +76,7 @@ public class productoDao {
 
     public List<Object[]> listarProductosByCodigo(String codigo) throws Exception {
         iniciarOperacion();
-        Query query = sesion.createQuery("Select p.idProducto,p.nombre,p.descripcion,p.codigo, p.categoria,p.precioCompra,p.stcokMinimo,p.estado,p.medida from Producto p where p.codigo=?");
+        Query query = sesion.createQuery("Select p.idProducto,p.nombre,p.descripcion,p.codigo, p.categoria,p.precioCompra,p.precioVenta,p.stcokMinimo,p.estado,p.medida from Producto p where p.codigo=?");
         query.setString(0, codigo);
         List<Object[]> lista = query.list();
         sesion.close();

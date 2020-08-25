@@ -5,6 +5,11 @@
  */
 package com.pos.core;
 
+import com.pos.tabla.render.HeaderCellRenderer;
+import com.pos.tabla.render.RenderEstiloUno;
+import com.pos.tabla.render.RenderTabla;
+import static com.sistema.view.vtnVentas.tablaVenta;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -14,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -104,5 +111,33 @@ public class Validaciones {
         g2.drawImage(srcImg, 0, 0, w, h, null);
         g2.dispose();
         return resizedImg;
+    }
+
+    public void formatearNumero(double monto) {
+        DecimalFormat formateador = new DecimalFormat("###,###.##");
+        //System.out.println(formateador.format(1250.4));
+        //System.out.println(formateador.format(100000.78));
+
+        //return (formateador.format(monto));
+    }
+
+    public static void mejorarAparienciaTabla(JTable tabla) {
+        tabla.setDefaultRenderer(Object.class, new RenderTabla());//renderizando la tabla
+        tabla.setRowHeight(30);
+        JTableHeader header = tabla.getTableHeader();
+        header.setDefaultRenderer(new HeaderCellRenderer());
+        tabla.setSelectionBackground(new Color(231, 247, 252));
+        tabla.setSelectionForeground(new Color(0, 0, 0));
+        tabla.setGridColor(new java.awt.Color(221, 221, 221));
+    }
+    
+    public static void mejorarAparienciaTablaNormal(JTable tabla) {
+        tabla.setDefaultRenderer(Object.class, new RenderEstiloUno());//renderizando la tabla
+        tabla.setRowHeight(30);
+        JTableHeader header = tabla.getTableHeader();
+        header.setDefaultRenderer(new HeaderCellRenderer());
+        tabla.setSelectionBackground(new Color(231, 247, 252));
+        tabla.setSelectionForeground(new Color(0, 0, 0));
+        tabla.setGridColor(new java.awt.Color(221, 221, 221));
     }
 }

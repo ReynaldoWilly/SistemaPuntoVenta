@@ -27,6 +27,40 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
+    public Cliente(String nombre, String ci, String credito, String plazo, String estado) {
+        this.nombre = nombre;
+        this.ci = ci;
+        this.credito = credito;
+        this.plazo = plazo;
+        this.estado = estado;
+    }
+
+    public Cliente(String nombre, String ci, String telefono, String celContacto, String email, String direccion, String credito, String plazo, String estado) {
+        this.nombre = nombre;
+        this.ci = ci;
+        this.telefono = telefono;
+        this.celContacto = celContacto;
+        this.email = email;
+        this.direccion = direccion;
+        this.credito = credito;
+        this.plazo = plazo;
+        this.estado = estado;
+    }
+
+   
+    public Cliente(int idCliente, String nombre, String ci, String telefono, String celContacto, String email, String direccion, String credito, String plazo, String estado) {
+        this.idCliente = idCliente;
+        this.nombre = nombre;
+        this.ci = ci;
+        this.telefono = telefono;
+        this.celContacto = celContacto;
+        this.email = email;
+        this.direccion = direccion;
+        this.credito = credito;
+        this.plazo = plazo;
+        this.estado = estado;
+    }
+
     public int getIdCliente() {
         return idCliente;
     }
@@ -106,4 +140,6 @@ public class Cliente implements Serializable {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+   
 }

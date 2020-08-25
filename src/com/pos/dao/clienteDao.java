@@ -48,15 +48,37 @@ public class clienteDao {
         sesion.close();
         return lista;
     }
-    
-    
-    
-    public List<Object[]> listarUsuario() throws Exception {
+
+    //Metodo que realiza el listado de los datos para el modulp ode ventas
+    public List<Object[]> listarClienteForVentas() throws Exception {
         iniciarOperacion();
-        Query query = sesion.createQuery("Select u.idUsuario, u.nombres,u.apellidos,u.celular,u.cargo,u.email,u.tipousuario, u.password from Usuario As u");
+        Query query = sesion.createQuery("Select c.idCliente, c.nombre,c.ci,c.credito,c.plazo,c.estado\n"
+                + "From Cliente as c");
         List<Object[]> lista = query.list();
         sesion.close();
         return lista;
+    }
+
+    //Metodo que realiza la busqueda de busqueda para tabla modulo de ventas 
+    public List<Object[]> buscarClienteFiltroBYNombreByAlmacenModVentas(String ci) throws Exception {
+        List<Object[]> resultado;
+        iniciarOperacion();
+        Query query = sesion.createQuery("SELECT c.idCliente,c.nombre,c.ci,c.credito,c.plazo,c.estado \n"
+                + "FROM Cliente as c \n"
+                + "WHERE  c.ci like  '" + ci + "%'");
+        System.out.println(query);
+        resultado = query.list();
+
+        for (int i = 0; i < resultado.size(); i++) {
+            System.out.println("" + resultado.size());
+            System.out.println("--" + resultado.get(i)[0]);
+            System.out.println("--" + resultado.get(i)[1]);
+            System.out.println("--" + resultado.get(i)[2]);
+            System.out.println("--" + resultado.get(i)[3]);
+            System.out.println("--" + resultado.get(i)[4]);
+        }
+        sesion.close();
+        return resultado;
     }
 
     //Buscar usuarios
@@ -67,7 +89,8 @@ public class clienteDao {
         query.setInteger(0, id);
         List<Object[]> lista = query.list();
 
-        for (int i = 0; i < lista.size(); i++) {
+        for (int i = 0; i < lista.size(); i++) 
+        {
             System.out.println("" + lista.size());
             System.out.println("--" + lista.get(i)[0]);
             System.out.println("--" + lista.get(i)[1]);
@@ -80,6 +103,17 @@ public class clienteDao {
         return lista;
     }
 
+    public List<Object[]> buscarClienteByNit(String nit) throws Exception {
+
+        iniciarOperacion();
+        Query query = sesion.createQuery("Select u.nombre,u.estado,u.credito From Cliente as u Where u.ci=?");
+        query.setString(0, nit);
+        List<Object[]> lista = query.list();
+        tx.commit();
+        sesion.close();
+        return lista;
+    }
+
     public Cliente buscarUsuario(String usuario, String password) throws Exception {
         Cliente user = null;
         iniciarOperacion();
@@ -87,6 +121,18 @@ public class clienteDao {
         query.setString(0, usuario);
 
         query.setString(1, password);
+        user = (Cliente) query.uniqueResult();
+        tx.commit();
+        sesion.close();
+        return user;
+    }
+    
+    public Cliente ClienteByNit(String nit) throws Exception {
+        Cliente user = null;
+        iniciarOperacion();
+        Query query = sesion.createQuery("From Cliente where ci=?");
+        query.setString(0, nit);
+
         user = (Cliente) query.uniqueResult();
         tx.commit();
         sesion.close();

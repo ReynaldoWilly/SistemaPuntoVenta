@@ -10,6 +10,10 @@ import com.pos.dao.UnidadesMedidaDao;
 import com.pos.dao.productoDao;
 import com.pos.pojos.Producto;
 import com.pos.pojos.UnidadesMedida;
+import com.pos.tabla.render.HeaderCellRenderer;
+import com.pos.tabla.render.RenderTabla;
+import static com.sistema.view.vtnVentas.tablaVenta;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -25,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -51,7 +56,8 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         listarDatos();
         cargarComboUnidades();
         bloquearCamposProducto();
-
+        Validaciones.mejorarAparienciaTablaNormal(tablaProductos);
+        
     }
 
     public void limpiarCampos() {
@@ -62,6 +68,8 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         txtPrecioPro.setText("0");
         txtPrecioVenta.setText("0");
     }
+
+    
 
     //Metodo que bloquea los campos de texto
     public void bloquearCamposProducto() {
@@ -157,6 +165,12 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e, null, JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    //metodo que inserta el icono de usuario por defecto
+    public void setIcono() {
+        ImageIcon imagenUser = new ImageIcon(getClass().getResource("/com/pos/images/selectImagen.png"));
+        lbmProducto.setIcon(imagenUser);
     }
 
     /**
@@ -289,6 +303,8 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lbmProducto.setForeground(new java.awt.Color(153, 153, 153));
+        lbmProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbmProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/images/selectImagen.png"))); // NOI18N
         lbmProducto.setToolTipText("Click para seleccionar una imagen..");
         lbmProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbmProducto.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -488,6 +504,11 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         txtPrecioVenta.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         txtPrecioVenta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtPrecioVenta.setText("0.0");
+        txtPrecioVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioVentaKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -840,6 +861,8 @@ public class vtnProducto extends javax.swing.JInternalFrame {
         RacPro.setSelected(true);
         tablaProductos.setEnabled(true);
         btnEdicion.setEnabled(false);
+        setIcono();
+
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnRegProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegProActionPerformed
@@ -882,11 +905,12 @@ public class vtnProducto extends javax.swing.JInternalFrame {
                 productoDao proDao = new productoDao();
 
                 if (proDao.registarProducto(pro)) {
-                    JOptionPane.showMessageDialog(this, "Registro de producto correcto..!!", null, JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Registro de producto correcto..!!", "Satisfactorio..::..", JOptionPane.INFORMATION_MESSAGE);
                     limpiarCampos();
                     listarDatos();
                     bloquearCamposProducto();
                     limpiarCampos();
+                    setIcono();
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Faltan campos por llenar..!!", "Mensaje", JOptionPane.WARNING_MESSAGE);
@@ -966,10 +990,11 @@ public class vtnProducto extends javax.swing.JInternalFrame {
                     pro.setEstado(estado);
 
                     if (proDao.actualizarProducto(pro)) {
-                        JOptionPane.showMessageDialog(this, "Actualización correcta", null, JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Actualización correcta", "Satisfactorio..::..", JOptionPane.INFORMATION_MESSAGE);
                         limpiarCampos();
                         bloquearCamposProducto();
                         listarDatos();
+                        setIcono();
                     }
                 } else {
                     pro.setNombre(txtNomPro.getText());
@@ -989,10 +1014,11 @@ public class vtnProducto extends javax.swing.JInternalFrame {
                     pro.setEstado(estado);
 
                     if (proDao.actualizarProducto(pro)) {
-                        JOptionPane.showMessageDialog(this, "Actualización correcta", null, JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Actualización correcta", "Satisfactorio..::..", JOptionPane.INFORMATION_MESSAGE);
                         limpiarCampos();
                         bloquearCamposProducto();
                         listarDatos();
+                        setIcono();
                     }
                 }
 
@@ -1011,10 +1037,11 @@ public class vtnProducto extends javax.swing.JInternalFrame {
             if (y == JOptionPane.YES_OPTION) {
                 productoDao pr = new productoDao();
                 if (pr.eliminarProducto(this.getObjProducto())) {
-                    JOptionPane.showMessageDialog(this, "Eliminacion correcta", null, JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Eliminacion correcta", "Mensaje..::..", JOptionPane.INFORMATION_MESSAGE);
                     limpiarCampos();
                     bloquearCamposProducto();
                     listarDatos();
+                    setIcono();
                 }
             }
         } catch (Exception ex) {
@@ -1024,7 +1051,16 @@ public class vtnProducto extends javax.swing.JInternalFrame {
 
     private void txtPrecioProKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioProKeyTyped
         // TODO add your handling code here:
-        new Validaciones().validaNumeros(txtPrecioPro);
+        char c = evt.getKeyChar();
+//        if (c < '0' || c > '9') {
+//            evt.consume();
+//        }
+        if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != '.') {
+            evt.consume();
+        }
+        if (evt.getKeyChar() == '.' && txtPrecioPro.getText().contains(".")) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtPrecioProKeyTyped
 
     private void tablaProductosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductosMousePressed
@@ -1086,9 +1122,10 @@ public class vtnProducto extends javax.swing.JInternalFrame {
                 fila[3] = lista.get(i)[3];//codigo
                 fila[4] = lista.get(i)[4];//categoria
                 fila[5] = lista.get(i)[5];//precio compra
-                fila[6] = lista.get(i)[6];//sctok
-                fila[7] = lista.get(i)[7];//estado
-                fila[8] = lista.get(i)[8];//medida
+                fila[6] = lista.get(i)[6];//precio venta
+                fila[7] = lista.get(i)[7];//sctok
+                fila[8] = lista.get(i)[8];//estado
+                fila[9] = lista.get(i)[9];//medida
 
                 modelo.addRow(fila);
             }
@@ -1123,10 +1160,10 @@ public class vtnProducto extends javax.swing.JInternalFrame {
                         fila[3] = lista.get(i)[3];//codigo
                         fila[4] = lista.get(i)[4];//categoria
                         fila[5] = lista.get(i)[5];//precio compra
-                        fila[6] = lista.get(i)[6];//sctok
-                        fila[7] = lista.get(i)[7];//estado
-                        fila[8] = lista.get(i)[8];//medida
-
+                        fila[6] = lista.get(i)[6];//precio venta
+                        fila[7] = lista.get(i)[7];//sctok
+                        fila[8] = lista.get(i)[8];//estado
+                        fila[9] = lista.get(i)[9];//medida
                         modelo.addRow(fila);
                     }
                 } else {
@@ -1141,6 +1178,20 @@ public class vtnProducto extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error " + e, null, JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtPrecioVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+//        if (c < '0' || c > '9') {
+//            evt.consume();
+//        }
+        if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != '.') {
+            evt.consume();
+        }
+        if (evt.getKeyChar() == '.' && txtPrecioVenta.getText().contains(".")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPrecioVentaKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

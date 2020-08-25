@@ -8,7 +8,11 @@ package com.pos.dao;
 import com.pos.pojos.Ajustes;
 import com.pos.pojos.ComboProducto;
 import com.pos.pojos.Producto;
+import com.pos.util.Conexion;
 import com.pos.util.HibernateUtil;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -89,6 +93,42 @@ public class ComboDao {
         System.out.println(query);
         resultado = query.list();
         sesion.close();
+        return resultado;
+    }
+
+    //Metodo que realiza el listado de los combos registrados
+    public List<Object[]> listarCombos() throws Exception {
+        List<Object[]> resultado;
+        iniciarOperacion();
+        Query query = sesion.createQuery("SELECT idComboProducto,nombreCombo,codigoCombo,precioCombo,estado\n"
+                + "FROM ComboProducto");
+        resultado = query.list();
+
+        sesion.close();
+        return resultado;
+    }
+    
+    //Metodo que realiza el listado de los combos para el modulo de ventas
+    public List<Object[]> listarCombosVentas() throws Exception {
+        List<Object[]> resultado;
+        iniciarOperacion();
+        Query query = sesion.createQuery("SELECT idComboProducto,nombreCombo,codigoCombo,precioCombo\n"
+                + "FROM ComboProducto");
+        resultado = query.list();
+
+        sesion.close();
+        return resultado;
+    }
+
+    //metodo que lista en detalle del combo 
+    //Metodo que realiza el listado del detalle del combo
+    public ResultSet listarDetalleCombo(int idCombo) throws Exception {
+        Connection conex = Conexion.getConectar();//obteniendo la conexion a la BD
+        Statement stm = conex.createStatement();
+        String sql = "SELECT distinct d.idDetalleCombo, p.idProducto,d.cantidad, p.nombre\n"
+                + "FROM producto As p, detallecombo As d, comboproducto As c\n"
+                + "WHERE d.idComboProducto="+idCombo+" AND d.idProducto=p.idProducto ";
+        ResultSet resultado = stm.executeQuery(sql);
         return resultado;
     }
 

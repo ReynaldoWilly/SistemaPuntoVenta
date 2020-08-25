@@ -5,9 +5,10 @@
   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
+    
     <class name="com.pos.pojos.ComboProducto" table="comboproducto">
         
-        <id name="codigoCombo" type="java.lang.Integer">
+        <id name="idComboProducto" type="java.lang.Integer">
             <column name="idComboProducto" />
             <generator class="identity" />
         </id>

@@ -26,6 +26,15 @@ public class ComboProducto implements Serializable {
     public ComboProducto() {
     }
 
+    public ComboProducto(int idComboProducto, String nombreCombo, String codigoCombo, String estado, String precioCombo, Set<DetalleCombo> detalleCombo) {
+        this.idComboProducto = idComboProducto;
+        this.nombreCombo = nombreCombo;
+        this.codigoCombo = codigoCombo;
+        this.estado = estado;
+        this.precioCombo = precioCombo;
+        this.detalleCombo = detalleCombo;
+    }
+
     public ComboProducto(String nombreCombo, String codigoCombo, String estado, String precioCombo, Set<DetalleCombo> detalleCombo) {
         this.nombreCombo = nombreCombo;
         this.codigoCombo = codigoCombo;

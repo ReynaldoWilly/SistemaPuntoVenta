@@ -36,6 +36,7 @@ public class vtnUsuarios extends javax.swing.JInternalFrame {
         setLocation(a / 2, b / 2);
         bloquearCamposFormulario();
         listarUsuarios();
+        Validaciones.mejorarAparienciaTablaNormal(tablaUsuarios);
     }
 
     //Metodo que bloquea los campos de texto
@@ -209,7 +210,7 @@ public class vtnUsuarios extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(68, Short.MAX_VALUE)
+                .addContainerGap(172, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(530, 530, 530))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -409,13 +410,34 @@ public class vtnUsuarios extends javax.swing.JInternalFrame {
             new String [] {
                 "ID", "NOMBRE", "APELLIDO", "CELULAR", "CARGO", "EMAIL", "T. USUARIO", "PASSOWRD"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tablaUsuariosMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(tablaUsuarios);
+        if (tablaUsuarios.getColumnModel().getColumnCount() > 0) {
+            tablaUsuarios.getColumnModel().getColumn(0).setMinWidth(50);
+            tablaUsuarios.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tablaUsuarios.getColumnModel().getColumn(0).setMaxWidth(50);
+            tablaUsuarios.getColumnModel().getColumn(1).setResizable(false);
+            tablaUsuarios.getColumnModel().getColumn(2).setResizable(false);
+            tablaUsuarios.getColumnModel().getColumn(3).setResizable(false);
+            tablaUsuarios.getColumnModel().getColumn(4).setResizable(false);
+            tablaUsuarios.getColumnModel().getColumn(5).setResizable(false);
+            tablaUsuarios.getColumnModel().getColumn(6).setResizable(false);
+            tablaUsuarios.getColumnModel().getColumn(7).setResizable(false);
+            tablaUsuarios.getColumnModel().getColumn(7).setPreferredWidth(50);
+        }
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -425,7 +447,9 @@ public class vtnUsuarios extends javax.swing.JInternalFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -502,9 +526,9 @@ public class vtnUsuarios extends javax.swing.JInternalFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
