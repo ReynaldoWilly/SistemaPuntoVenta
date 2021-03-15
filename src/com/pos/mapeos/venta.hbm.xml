@@ -5,29 +5,25 @@
   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-
     <class name="com.pos.pojos.Venta" table="venta">
         <id name="idVenta" type="integer">
             <column name="idVenta"/>
-            <generator class="identity"></generator>
+            <generator class="identity"/>
         </id>
-  
         <property name="idCliente" column="idCliente"/>
         <property name="monto" column="monto"/>
         <property name="tipoVenta" column="tipoVenta"/>
         <property name="fecha" column="fecha"/>
         <property name="idUsuario" column="idUsuario"/>
         <property name="documentos" column="documento"/>
-
-             
-        <set name="itemsventa" table="detalleventa" inverse="true" cascade="all" lazy="true" fetch="select">
+        
+        <set name="itemsventa" table="detalleventa" cascade="all" lazy="true"  inverse="true">
             <key>
                 <column name="idVenta"></column>
             </key>
-            <one-to-many class="com.pos.pojos.detalleVenta"/>
+            <one-to-many class="com.pos.pojos.detalleVenta"></one-to-many>
         </set>
-       <!---->
-        
+             
     </class>
-
+  
 </hibernate-mapping>

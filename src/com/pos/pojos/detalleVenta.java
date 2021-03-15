@@ -15,8 +15,10 @@ public class detalleVenta implements Serializable {
 
     private int idDetalleVenta;
     private int idProducto;
+    private String codigo;
     private int cantidad;
     private String precio;
+    private int color;
     private Venta venta;
 
     public detalleVenta() {
@@ -60,5 +62,21 @@ public class detalleVenta implements Serializable {
 
     public void setVenta(Venta venta) {
         this.venta = venta;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }

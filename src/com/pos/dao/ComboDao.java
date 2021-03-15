@@ -12,6 +12,7 @@ import com.pos.util.Conexion;
 import com.pos.util.HibernateUtil;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -69,6 +70,18 @@ public class ComboDao {
         return false;//FALSE= codigo no registrado y listo para regitrarse
     }
 
+    //metodo que realiza devuelve el codigo del combo solicitado
+    public String buscarCodigo(int id) 
+    {
+        String cm = null;
+      
+        iniciarOperacion();
+        Query query = sesion.createQuery("SELECT codigoCombo From ComboProducto Where id=?");
+        query.setInteger(0, id);
+        cm = (String) query.uniqueResult();
+         return cm;
+    }
+
     public List<Object[]> listarProductos() throws Exception {
         iniciarOperacion();
         Query query = sesion.createQuery("Select p.idProducto,p.nombre from Producto p");
@@ -107,7 +120,21 @@ public class ComboDao {
         sesion.close();
         return resultado;
     }
-    
+
+    //Metodo que verifica si existe el combo
+    public boolean extisteComboJDBC(String nombreCombo) throws SQLException 
+    {
+        Connection conex = Conexion.getConectar();//obteniendo la conexion a la BD
+        Statement stm = conex.createStatement();
+        String sql = "SELECT * FROM comboProducto  WHERE nombreCombo = \'" + nombreCombo + "\'";
+        ResultSet resultado = stm.executeQuery(sql);
+        if (resultado.next()) 
+        {
+            return false;
+        }
+        return true;
+    }
+
     //Metodo que realiza el listado de los combos para el modulo de ventas
     public List<Object[]> listarCombosVentas() throws Exception {
         List<Object[]> resultado;
@@ -127,7 +154,7 @@ public class ComboDao {
         Statement stm = conex.createStatement();
         String sql = "SELECT distinct d.idDetalleCombo, p.idProducto,d.cantidad, p.nombre\n"
                 + "FROM producto As p, detallecombo As d, comboproducto As c\n"
-                + "WHERE d.idComboProducto="+idCombo+" AND d.idProducto=p.idProducto ";
+                + "WHERE d.idComboProducto=" + idCombo + " AND d.idProducto=p.idProducto ";
         ResultSet resultado = stm.executeQuery(sql);
         return resultado;
     }

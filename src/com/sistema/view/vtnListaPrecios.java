@@ -938,7 +938,8 @@ public class vtnListaPrecios extends javax.swing.JInternalFrame {
                     if (tablaComboProducto.getRowCount() > 0) {
                         double precioM = Double.parseDouble(txtPrecioComboProd.getText());//recuperando el precio
 
-                        if (precioM > 0) {
+                        if (precioM > 0) 
+                        {
                             //SETEANDO LOS CAMPOS COMBO PRODUCTO
                             ComboProducto cmb = new ComboProducto();
                             cmb.setIdComboProducto(1);

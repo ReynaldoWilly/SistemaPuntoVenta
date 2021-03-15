@@ -9,14 +9,17 @@ import com.pos.pojos.Inventario;
 import com.pos.util.Conexion;
 import com.pos.util.HibernateUtil;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 /**
  *
  * @author Reynaldo
@@ -33,7 +36,7 @@ public class InventarioDao {
     }
 
     public void manejaexception(HibernateException he) {
-        
+
         tx.rollback();
         throw new HibernateException("Ocurrio un error en la capa de acceso a datos");
     }
@@ -125,8 +128,9 @@ public class InventarioDao {
         sesion.close();
         return lista;
     }
+
     //Metodo que realiza la consulta HQL para el modulo de ventas ventana escoja producto 
-     public List<Object[]> kardexInventarioByAlmacenForVentas(int idAlmacen) throws Exception {
+    public List<Object[]> kardexInventarioByAlmacenForVentas(int idAlmacen) throws Exception {
         iniciarOperacion();
         Query query = sesion.createQuery("SELECT  iv.idInventario,p.nombre,c.nombre,iv.stock FROM Producto p, Inventario iv,Colores c WHERE iv.idProducto=p.idProducto and iv.idcolor=c.idColor  and iv.idAlmacen=? and iv.stock>0");
         query.setInteger(0, idAlmacen);
@@ -134,9 +138,9 @@ public class InventarioDao {
         sesion.close();
         return lista;
     }
-     
-      //Metodo que realiza la consulta HQL para el modulo de ventas modulo seleccion de combo
-     public List<Object[]> kardexInventarioByAlmacenVentasCombo(int idAlmacen) throws Exception {
+
+    //Metodo que realiza la consulta HQL para el modulo de ventas modulo seleccion de combo
+    public List<Object[]> kardexInventarioByAlmacenVentasCombo(int idAlmacen) throws Exception {
         iniciarOperacion();
         Query query = sesion.createQuery("SELECT  DISTINCT p.idProducto, p.nombre,c.nombre,i.stock FROM Producto As p, Inventario As i, Colores As c, Almacen As a WHERE p.idProducto=i.idProducto and i.idcolor=c.idColor and i.idAlmacen=? and  i.stock> 0");
         query.setInteger(0, idAlmacen);
@@ -144,7 +148,7 @@ public class InventarioDao {
         sesion.close();
         return lista;
     }
-    
+
     //Metodo que realiza el listado del kardex de inventario por almacen
     public List<Object[]> KardexProducto(int idAlmacen, String nomProd) throws Exception {
         iniciarOperacion();
@@ -154,5 +158,49 @@ public class InventarioDao {
         List<Object[]> lista = query.list();
         sesion.close();
         return lista;
+    }
+
+    //Medoti que realiaza la recuperacion del stock del producto 
+    public int recuperarStockProducto(int idProducto, int idColor,int idAlmacen) {
+        int stock=0;
+        Query query = sesion.createQuery("SELECT stock FROM Inventario WHERE idProducto=? and idcolor=? and idAlmacen=?");
+        query.setInteger(0, idProducto);
+        query.setInteger(1, idColor);
+        query.setInteger(2, idAlmacen);
+        
+        stock = (int) query.uniqueResult();
+        tx.commit();
+        sesion.close();
+        return stock;
+    }
+    
+    
+    //metodo que realiza la actualizacion de los datos en la BD
+    public static void actualizaStockInventario(int id, String stock) {
+        try {
+            Connection miConexion = Conexion.getConectar();
+            PreparedStatement statement = miConexion.prepareStatement("UPDATE inventario SET stock=?  WHERE idinventario=?");
+            statement.setString(1, stock);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+            statement.close();
+            miConexion.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar el precio del producto..!!" + ex.getMessage());
+        }
+    }
+    
+    public  int recuperarStock(int idProducto, int idAlm,int idColor) {
+        try 
+        {
+            Connection miConexion = Conexion.getConectar();
+            PreparedStatement statement = miConexion.prepareStatement("SELECT stock FROM inventario WHERE idcolor="+idColor+"and idProducto="+idProducto+"and idAlmacen="+idAlm);
+            statement.executeUpdate();
+            statement.close();
+            miConexion.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar el precio del producto..!!" + ex.getMessage());
+        }
+        return 0;
     }
 }

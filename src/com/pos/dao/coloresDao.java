@@ -59,8 +59,8 @@ public class coloresDao {
 
     public int buscarColorById(String nombre) throws Exception {
         iniciarOperacion();
-        Query query = sesion.createQuery("Select  c.idColor From Colores c where nombre=?");
-        query.setString(0, nombre);
+        Query query = sesion.createQuery("Select  c.idColor From Colores c where nombre=\'"+nombre+"\'");
+        //query.setString(0, nombre);
         int id = (int) query.uniqueResult();
         tx.commit();
         sesion.close();
@@ -76,5 +76,7 @@ public class coloresDao {
         sesion.close();
         return nombre;
     }
+    
+   
     
 }

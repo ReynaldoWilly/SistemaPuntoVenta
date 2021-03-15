@@ -10,8 +10,11 @@
             <generator class="identity"/>
         </id>
         <property name="idProducto" column="idProducto"/>
+        <property name="codigo" column="codigo"/>
         <property name="cantidad" column="cantidad"/>
         <property name="precio" column="precio"/>
+        <property name="color" column="color"/>
+        
         <many-to-one name="venta" class="com.pos.pojos.Venta" fetch="select">
             <column name="idVenta"></column>
         </many-to-one>

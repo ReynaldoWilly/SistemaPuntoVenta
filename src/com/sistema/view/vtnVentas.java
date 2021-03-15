@@ -11,12 +11,17 @@ import com.pos.dao.InformacionDao;
 import com.pos.dao.InventarioDao;
 import com.pos.dao.almacenDao;
 import com.pos.dao.clienteDao;
+import com.pos.dao.coloresDao;
 import com.pos.dao.productoDao;
+import com.pos.dao.ventaDao;
 import com.pos.pojos.Almacen;
 import com.pos.pojos.Cliente;
 import com.pos.pojos.Informacion;
+import com.pos.pojos.Inventario;
 import com.pos.pojos.Producto;
 import com.pos.pojos.Usuario;
+import com.pos.pojos.Venta;
+import com.pos.pojos.detalleVenta;
 import com.pos.tabla.render.HeaderCellRenderer;
 import com.pos.tabla.render.RenderTabla;
 import com.pos.util.Numero_a_Letra;
@@ -29,10 +34,12 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import java.util.function.ObjDoubleConsumer;
 import java.util.logging.Level;
@@ -93,7 +100,9 @@ public class vtnVentas extends javax.swing.JInternalFrame {
         cargarAlmacen();
         mejorarAparienciaTabla();
         //Añadiendo el evento de cambio de valor en el Jtable
+        
         anadeListenerAlModelo();
+        
         //fin------------------------------------------------
         //Recuperando informacion de descuentos e impuestos
         try {
@@ -113,7 +122,8 @@ public class vtnVentas extends javax.swing.JInternalFrame {
 
         }
     }
-
+    
+    
     public void mejorarAparienciaTabla() {
         tablaVenta.setDefaultRenderer(Object.class, new RenderTabla());//renderizando la tabla
         tablaVenta.setRowHeight(30);
@@ -125,8 +135,12 @@ public class vtnVentas extends javax.swing.JInternalFrame {
     }
 
 //Metodo que actualiza el valor de los mostos totales 
-    public void anadeListenerAlModelo() {
-        tablaVenta.getModel().addTableModelListener(new TableModelListener() {
+    public void anadeListenerAlModelo() 
+    {
+        
+       //JOptionPane.showMessageDialog(null, "INGRESA AL MODELO", "Mensaje..", JOptionPane.ERROR_MESSAGE);
+             
+        this.tablaVenta.getModel().addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent evento) {
                 actualizarMontos(evento);
@@ -137,25 +151,28 @@ public class vtnVentas extends javax.swing.JInternalFrame {
     //Metodo que realiza la actualizacion de los montos 
     public void actualizarMontos(TableModelEvent e) {
         try {
-            if (e.getType() == TableModelEvent.UPDATE) {
+            if (e.getType() == TableModelEvent.UPDATE)
+            {
 
                 // Se obtiene el modelo de la tabla y la fila/columna que han cambiado.
                 TableModel modelo = ((TableModel) (e.getSource()));
 
                 int fila = e.getFirstRow();
                 int columna = e.getColumn();
-                if (columna == 4) {
+                if (columna == 5) 
+                {
                     return;
                 }
-                // JOptionPane.showMessageDialog(null, "--->" + fila + "CON LA COLUMNA" + columna, "Mensaje..", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(null, "--->" + fila + "CON LA COLUMNA" + columna, "Mensaje..", JOptionPane.ERROR_MESSAGE);
                 //System.out.println(e.getFirstRow() + "-----" + e.getColumn());
-                int cantidad = Integer.parseInt(String.valueOf(tablaVenta.getValueAt(fila, 2)));//Cantidad del producto
+                int cantidad = Integer.parseInt(String.valueOf(tablaVenta.getValueAt(fila, 3)));//Cantidad del producto
                 double nuevoValor = Double.parseDouble(String.valueOf(tablaVenta.getValueAt(fila, columna)));
 
-                tablaVenta.setValueAt(String.valueOf(Validaciones.redondear(cantidad * nuevoValor)), fila, 4);
+                tablaVenta.setValueAt(String.valueOf(Validaciones.redondear(cantidad * nuevoValor)), fila, 5);
 
                 DefaultTableModel modelo2 = (DefaultTableModel) vtnVentas.tablaVenta.getModel();//creando el modelo pára llenar los datos al JTabble
                 suma(modelo2);
+                generarSubTotal();
                 generarPagoTotal();
 
             }
@@ -223,6 +240,21 @@ public class vtnVentas extends javax.swing.JInternalFrame {
                 modelo.addRow(fila);
             }
         }
+    }
+
+    //metodo que realiza el limpiado de los campos de la ventana ventas
+    public void limpiarCamposVenta() {
+        txtCliente.setText("");
+        txtNit.setText("");
+        comboAlmacen.setSelectedIndex(0);
+        txtCiCliente.setText("");
+        SpCantidad.setValue(0);
+        txtSubTotal.setText("0");
+        txtImpuestos.setText("0");
+        txtDescuentos.setText("0");
+        txtTotalPago.setText("0");
+        Validaciones.limpiarTabla(tablaProductos);
+
     }
 
     //metodo que hace la carga de datos de los clientes despues del filtro por CI/NI
@@ -312,16 +344,19 @@ public class vtnVentas extends javax.swing.JInternalFrame {
     }
 
     //Metodo que realiza la suma del subtotal de la compra
-    public void generarSubTotal() {
-        // int filas = this.tablaVenta.getRowCount();//recuperando la cantidad de filas de la tabla
+    public void generarSubTotal() 
+    {
+         //int filas = this.tablaVenta.getRowCount();//recuperando la cantidad de filas de la tabla
         //JOptionPane.showMessageDialog(this, "NUmero de filas recuperadas de la tabla" + filas, "Error", JOptionPane.ERROR_MESSAGE);
         try {
             double subtotal = 0.0;
             double valor = 0.0;
             for (int i = 0; i < tablaVenta.getRowCount(); ++i) {
 
-                valor = Double.parseDouble(String.valueOf(tablaVenta.getValueAt(i, 4)));//precio producto
+                valor = Double.parseDouble(String.valueOf(tablaVenta.getValueAt(i, 5)));//precio producto
                 subtotal = subtotal + valor;
+              // JOptionPane.showMessageDialog(this, "valor-->" + filas+"= "+valor, "Error", JOptionPane.ERROR_MESSAGE);
+                
             }
             txtSubTotal.setText(String.valueOf(Validaciones.redondear(subtotal)));
         } catch (Exception ex) {
@@ -331,7 +366,8 @@ public class vtnVentas extends javax.swing.JInternalFrame {
 
     public void generarPagoTotal() {
         // int filas = this.tablaVenta.getRowCount();//recuperando la cantidad de filas de la tabla
-        try {
+        try 
+        {
             double pagoTotal = Double.parseDouble(txtSubTotal.getText());
             BigDecimal factura = Validaciones.redondear(pagoTotal * Double.parseDouble(txtImpuestos.getText()) / 100);
 
@@ -528,6 +564,72 @@ public class vtnVentas extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error al realizar la verificacion de los componentes del combo" + ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    //metodo que realiza la actualizacion de las cantidades del inventario
+    public void actualizaInventario() {
+        try {
+            //verificando si hay un combo en el carro de compras para realizar el descuento respectivo en el inventarios
+            ComboDao cdao = new ComboDao();
+            InventarioDao invDao = new InventarioDao();
+            coloresDao colordao = new coloresDao();
+            productoDao pdao = new productoDao();
+            almacenDao almDao = new almacenDao();
+            
+            Inventario inventario=new Inventario();
+            
+            int stock = 0;
+            int idAlm=0;
+            
+            for (int i = 0; i < tablaVenta.getRowCount(); i++)
+            {
+                //Ingresa si no existe el combo y existe un combo se va por else
+                if (cdao.extisteComboJDBC(String.valueOf(tablaVenta.getValueAt(i, 1)))) 
+                {
+                    String color = String.valueOf(tablaVenta.getValueAt(i, 2));
+
+                    int cantidad = Integer.parseInt(String.valueOf(tablaVenta.getValueAt(i, 3)));//cantidad de la venta a descontar
+                    idAlm=almDao.buscarAlmacenId(comboAlmacen.getSelectedItem().toString());//recuperando el id del almacen para generar el stock
+                    
+                    int id = pdao.buscarProductoByNombre(String.valueOf(tablaVenta.getValueAt(i, 1)));
+                    int idcolor = colordao.buscarColorById(color);
+                    
+                    
+
+                    JOptionPane.showMessageDialog(this, inventario.getStock()+"-"+inventario.getIdProducto(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al realizar el descuento de los stocks en el intenraio del sistema..!!" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    //Metodo que realiza el descuento del inventario una vez realizada la venta del producto
+    public void descontarInventario() {
+        /*try {
+            for (int i = 0; i < tablaVenta.getRowCount(); i++) {
+                //verificando si hay un combo en el carro de compras para realizar el descuento respectivo en el inventarios
+                ComboDao cdao = new ComboDao();
+                InventarioDao invDao = new InventarioDao();
+                //Ingresa si no existe el combo y existe un combo se va por else
+                if (cdao.extisteComboJDBC(String.valueOf(tablaVenta.getValueAt(i, 1)))) {
+                    String color = String.valueOf(tablaVenta.getValueAt(i, 2));
+                    int stock = invDao.recuperarStockProducto(Integer.parseInt(String.valueOf(tablaVenta.getValueAt(i, 0))), new coloresDao().buscarColorById(color));//recuperando el stock
+                    int cantVenta = Integer.parseInt(String.valueOf(tablaVenta.getValueAt(i, 3)));//recuprando la cantidad de 
+                    int cantidadActual = stock - cantVenta;
+                    JOptionPane.showMessageDialog(this, "Cantidad actualizaza " + stock + " - " + cantVenta + "= " + cantidadActual + "", "Error", JOptionPane.ERROR_MESSAGE);
+
+                } //reduciendo la cantidad del combo por falso
+                // se debe realizar el descuento de los componentes del combo
+                else {
+                }
+
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al realizar el descuento de los stocks en el intenraio del sistema..!!" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }*/
     }
 
     /**
@@ -2161,14 +2263,14 @@ public class vtnVentas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "PRODUCTO", "CANT.", "PRECIO U.", "PRECIO TOTAL"
+                "ID", "PRODUCTO", "COLOR", "CANT.", "PRECIO U.", "PRECIO TOTAL"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false
+                false, false, false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -2200,15 +2302,18 @@ public class vtnVentas extends javax.swing.JInternalFrame {
             tablaVenta.getColumnModel().getColumn(0).setMinWidth(30);
             tablaVenta.getColumnModel().getColumn(0).setPreferredWidth(30);
             tablaVenta.getColumnModel().getColumn(0).setMaxWidth(30);
-            tablaVenta.getColumnModel().getColumn(2).setMinWidth(50);
-            tablaVenta.getColumnModel().getColumn(2).setPreferredWidth(50);
-            tablaVenta.getColumnModel().getColumn(2).setMaxWidth(50);
-            tablaVenta.getColumnModel().getColumn(3).setMinWidth(90);
-            tablaVenta.getColumnModel().getColumn(3).setPreferredWidth(90);
-            tablaVenta.getColumnModel().getColumn(3).setMaxWidth(90);
-            tablaVenta.getColumnModel().getColumn(4).setMinWidth(150);
-            tablaVenta.getColumnModel().getColumn(4).setPreferredWidth(150);
-            tablaVenta.getColumnModel().getColumn(4).setMaxWidth(150);
+            tablaVenta.getColumnModel().getColumn(2).setMinWidth(60);
+            tablaVenta.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tablaVenta.getColumnModel().getColumn(2).setMaxWidth(60);
+            tablaVenta.getColumnModel().getColumn(3).setMinWidth(50);
+            tablaVenta.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tablaVenta.getColumnModel().getColumn(3).setMaxWidth(50);
+            tablaVenta.getColumnModel().getColumn(4).setMinWidth(90);
+            tablaVenta.getColumnModel().getColumn(4).setPreferredWidth(90);
+            tablaVenta.getColumnModel().getColumn(4).setMaxWidth(90);
+            tablaVenta.getColumnModel().getColumn(5).setMinWidth(150);
+            tablaVenta.getColumnModel().getColumn(5).setPreferredWidth(150);
+            tablaVenta.getColumnModel().getColumn(5).setMaxWidth(150);
         }
 
         jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pos/iconos/Remove.png"))); // NOI18N
@@ -2473,7 +2578,7 @@ public class vtnVentas extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10))
         );
@@ -2596,16 +2701,18 @@ public class vtnVentas extends javax.swing.JInternalFrame {
                         if (cant <= stokProd) {
                             fila[0] = String.valueOf(tablaProductos.getValueAt(tablaProductos.getSelectedRow(), 0));//ID PRODUCTO
                             fila[1] = String.valueOf(tablaProductos.getValueAt(tablaProductos.getSelectedRow(), 1));//producto 
-                            fila[2] = cant;//cantidad
+                            fila[2] = String.valueOf(tablaProductos.getValueAt(tablaProductos.getSelectedRow(), 2));//color
+                            fila[3] = cant;//cantidad
                             double precio = Double.parseDouble(pdao.recuperarPrecioProducto(new productoDao().buscarProductoByNombre((String) fila[1])));
-                            fila[3] = precio; //precio prducto
+                            fila[4] = precio; //precio prducto
 
                             double subtotal = cant * precio;
 
-                            fila[4] = String.valueOf(subtotal);
+                            fila[5] = String.valueOf(subtotal);
 
                             modelo.addRow(fila);//adicionando la fila a la tabla
                             suma(modelo);
+                            generarSubTotal();
                             generarPagoTotal();
 
                             DialogoProductoVentas.dispose();
@@ -2679,13 +2786,10 @@ public class vtnVentas extends javax.swing.JInternalFrame {
             clienteDao cliDao = new clienteDao();
             List<Object[]> cliente = cliDao.buscarClienteByNit(txtNit.getText());
             int idCliente = 0;
-            if (cliente.size() == 0) 
-            {
+            if (cliente.size() == 0) {
                 Cliente cli = new Cliente(txtCliente.getText(), txtNit.getText(), "", "", "", "", "NO", "0", "Activo");
                 cliDao.registarCliente(cli);
-            } 
-            else 
-            {
+            } else {
                 Cliente cli2 = new Cliente();
                 cli2 = cliDao.ClienteByNit(txtNit.getText());
                 idCliente = cli2.getIdCliente();
@@ -2698,12 +2802,68 @@ public class vtnVentas extends javax.swing.JInternalFrame {
             int dia = txtFechaVenta.getCalendar().get(Calendar.DAY_OF_MONTH);
             String fecha = año + "-" + mes + "-" + dia;
             //JOptionPane.showMessageDialog(this, "fecha--->" + fecha);
-            
-            
-            
-            
 
+            //seteando los valores para el registro de venta en la BD
+            Venta venta = new Venta();
+
+            venta.setIdCliente(idCliente);//idCliente
+            venta.setMonto(txtTotalPago.getText());//Monto pagado
+            venta.setTipoVenta(comboPago.getSelectedItem().toString());//tipo de pago
+            venta.setFecha(txtFechaVenta.getDate());//fecha venta
+            venta.setIdUsuario(userlogin.getIdUsuario());//id de usuario logueado
+            venta.setDocumentos(comboDocumento.getSelectedItem().toString());//documento de venta
+            //-------------------------seteo de datos de venta
+
+            //--------------detalle de venta----------------//
+            //RECUPERANDO LOS ITEMS DEL COMBOPRODUCTO
+            Set<detalleVenta> items = new HashSet<>();
+
+            productoDao pdao = new productoDao();
+
+            ComboDao cdao = new ComboDao();
+            int sw = 0;//variable que se activa cuando solo hay productos en la cesta de venta
+
+            for (int i = 0; i < tablaVenta.getRowCount(); i++) {
+                detalleVenta det = new detalleVenta();
+
+                //verificando si hay un combo en el carrito de venta
+                //Ingresa si no hay un combo en la tabla venta ()
+                if (cdao.extisteComboJDBC(String.valueOf(tablaVenta.getValueAt(i, 1)))) {
+                    det.setIdProducto(pdao.buscarProductoByNombre(String.valueOf(tablaVenta.getValueAt(i, 1))));//id Producto
+
+                    det.setCantidad(Integer.parseInt(String.valueOf(tablaVenta.getValueAt(i, 3))));//cantidad producto
+                    det.setPrecio(String.valueOf(tablaVenta.getValueAt(i, 4)));//precio 
+                    det.setColor(new coloresDao().buscarColorById(String.valueOf(tablaVenta.getValueAt(i, 2))));
+                    det.setVenta(venta);
+                    items.add(det);
+                    sw = 1; //activando la variable para realizar el descuento del producto en inventario
+
+                } else {
+                    det.setIdProducto(Integer.parseInt(String.valueOf(tablaVenta.getValueAt(i, 0))));//seteando el id del combo
+                    det.setCodigo(cdao.buscarCodigo(Integer.parseInt(String.valueOf(tablaVenta.getValueAt(i, 0)))));//codigo del combo
+                    det.setCantidad(Integer.parseInt(String.valueOf(tablaVenta.getValueAt(i, 3))));//seteando la cantidad de los combos
+                    det.setPrecio(String.valueOf(tablaVenta.getValueAt(i, 4)));//precio combo
+                    det.setColor(11);//color generico 
+
+                    det.setVenta(venta);
+                    items.add(det);
+                }
+            }
+
+            venta.setItemsventa(items);
             //--------------fin del seteo de la venta
+            //REALIZANDO LA INSERCION DE LOS DATOS
+            ventaDao vDao = new ventaDao();
+
+            if (vDao.registarVenta(venta)) {
+                JOptionPane.showMessageDialog(this, "La venta se registro correctamente..!", "Mensaje..", JOptionPane.INFORMATION_MESSAGE);
+                //ingresnado cuandoen la cesta
+
+                actualizaInventario();//realizando el respectivo descuento en el inventario
+                limpiarCamposVenta();
+                Validaciones.limpiarTabla(tablaVenta);
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "A ocurrido un error contacte con el administrador" + e.getMessage(), "Mensaje..", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -2717,6 +2877,10 @@ public class vtnVentas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         this.dispose();
         validaVentana = null;
+        limpiarCamposVenta();
+        Validaciones.limpiarTabla(tablaComboDetalleVenta);
+        Validaciones.limpiarTabla(tablaVenta);
+        Validaciones.limpiarTabla(tablaProductosCombo);
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void txtImpuestosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImpuestosActionPerformed
@@ -2830,6 +2994,9 @@ public class vtnVentas extends javax.swing.JInternalFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         Validaciones.limpiarTabla(tablaVenta);
+        Validaciones.limpiarTabla(tablaComboDetalleVenta);
+        Validaciones.limpiarTabla(tablaProductosCombo);
+
         comboAlmacen.setSelectedIndex(0);
         comboPago.setSelectedIndex(0);
         comboDocumento.setSelectedIndex(0);
@@ -2838,6 +3005,7 @@ public class vtnVentas extends javax.swing.JInternalFrame {
         txtNit.setText("");
         generarSubTotal();
         generarPagoTotal();
+
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -2907,6 +3075,7 @@ public class vtnVentas extends javax.swing.JInternalFrame {
 
     private void tablaVentaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tablaVentaPropertyChange
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_tablaVentaPropertyChange
 
     private void txtCiCliente1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCiCliente1KeyReleased
@@ -2921,7 +3090,8 @@ public class vtnVentas extends javax.swing.JInternalFrame {
 
     private void tablaComboMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaComboMousePressed
         // TODO add your handling code here:
-        try {
+        try 
+        {
             DefaultTableModel modelo = (DefaultTableModel) tablaDetalleCombo.getModel();//creando el modelo pára llenar los datos al JTableje
 
             int idCombo = Integer.parseInt(String.valueOf(tablaCombo.getValueAt(tablaCombo.getSelectedRow(), 0)));//recuperando el id del combo
@@ -3117,14 +3287,16 @@ public class vtnVentas extends javax.swing.JInternalFrame {
         int cant = Integer.parseInt(SpCantidadCombos.getValue().toString());//recuperando la cantidad de los combos formados
         fila[0] = String.valueOf(tablaCombo.getValueAt(tablaCombo.getSelectedRow(), 0));//ID PRODUCTO
         fila[1] = String.valueOf(tablaCombo.getValueAt(tablaCombo.getSelectedRow(), 1));//Nombre combo 
-        fila[2] = cant;
+        fila[2] = "---";//color 
+
+        fila[3] = cant;
 
         double precio = Double.parseDouble(String.valueOf(tablaCombo.getValueAt(tablaCombo.getSelectedRow(), 3)));
-        fila[3] = precio; //precio prducto
+        fila[4] = precio; //precio prducto
 
         double subtotal = cant * precio;
 
-        fila[4] = String.valueOf(subtotal);
+        fila[5] = String.valueOf(subtotal);
 
         modelo.addRow(fila);//adicionando la fila a la tabla
         suma(modelo);
