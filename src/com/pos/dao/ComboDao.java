@@ -130,9 +130,10 @@ public class ComboDao {
         ResultSet resultado = stm.executeQuery(sql);
         if (resultado.next()) 
         {
-            return false;
+            return true;
         }
         return true;
+        
     }
 
     //Metodo que realiza el listado de los combos para el modulo de ventas

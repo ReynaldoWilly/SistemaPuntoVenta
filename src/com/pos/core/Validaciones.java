@@ -133,7 +133,7 @@ public class Validaciones {
     
     public static void mejorarAparienciaTablaNormal(JTable tabla) {
         tabla.setDefaultRenderer(Object.class, new RenderEstiloUno());//renderizando la tabla
-        tabla.setRowHeight(30);
+        tabla.setRowHeight(21);
         JTableHeader header = tabla.getTableHeader();
         header.setDefaultRenderer(new HeaderCellRenderer());
         tabla.setSelectionBackground(new Color(231, 247, 252));

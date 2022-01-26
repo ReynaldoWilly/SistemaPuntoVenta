@@ -346,6 +346,11 @@ public class vtnPrincipal extends javax.swing.JFrame {
             alm.setMaximizable(false);//no se puede maximizar
             alm.setClosable(true);//si se puede cerra la ventana
             alm.setIconifiable(true);
+            //--------
+            int ancho= (int)alm.getWidth()/2;
+            int alto= (int)alm.getHeight()/2;
+             //alm.setSize(ancho,alto);
+            //-------------
             panelMDI.add(alm);
             alm.setVisible(true);
         } else {
@@ -365,7 +370,9 @@ public class vtnPrincipal extends javax.swing.JFrame {
             alm.setIconifiable(true);
             panelMDI.add(alm);
             alm.setVisible(true);
-        } else {
+        } 
+        else 
+        {
             JOptionPane.showMessageDialog(this, "La ventana gestión de usuarios ya esta activa..!!", "Mensaje..", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_menuGestionUsuariosActionPerformed
@@ -436,7 +443,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
         String varValidacion = vtnListaPrecios.validaVentana;
         if (varValidacion == null) {
             vtnListaPrecios alm = new vtnListaPrecios();
-            alm.setTitle("Definición de precios..::..");
+            alm.setTitle("Combo producto..::..");
             alm.setResizable(false);//no es redimencionable
             alm.setMaximizable(false);//no se puede maximizar
             alm.setClosable(true);//si se puede cerra la ventana

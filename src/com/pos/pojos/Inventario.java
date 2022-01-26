@@ -9,8 +9,8 @@ package com.pos.pojos;
  *
  * @author Reynaldo
  */
-public class Inventario 
-{
+public class Inventario {
+
     private int idInventario;
     private int stock;
     private int idcolor;
@@ -18,9 +18,8 @@ public class Inventario
     private int idAlmacen;
     private String tipoInv;
 
-    public Inventario() 
-    {
-      
+    public Inventario() {
+
     }
 
     public Inventario(int stock, int idcolor, int idProducto, int idAlmacen, String tipoInv) {
@@ -30,7 +29,8 @@ public class Inventario
         this.idAlmacen = idAlmacen;
         this.tipoInv = tipoInv;
     }
-
+    
+    
 
     public int getIdInventario() {
         return idInventario;
@@ -48,7 +48,6 @@ public class Inventario
         this.stock = stock;
     }
 
-  
     public int getIdProducto() {
         return idProducto;
     }

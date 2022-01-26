@@ -148,6 +148,11 @@ public class vtnAlmacen extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         btnHabilitar = new javax.swing.JToggleButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Gestionar Almacen..");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -375,7 +380,7 @@ public class vtnAlmacen extends javax.swing.JInternalFrame {
                 .addComponent(btnActualizar)
                 .addGap(41, 41, 41)
                 .addComponent(btnEliminar)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

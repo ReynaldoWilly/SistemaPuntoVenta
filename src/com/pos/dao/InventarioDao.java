@@ -103,7 +103,7 @@ public class InventarioDao {
     public Inventario recuperaStockInventario(int idAlmacen, int idProducto, int idColor) throws SQLException {
         Connection conex = Conexion.getConectar();//obteniendo la conexion a la BD
         Statement stm = conex.createStatement();
-        String sql = "SELECT *  FROM inventario WHERE idAlmacen = " + idAlmacen + " AND idProducto=" + idProducto + " AND idcolor=" + idColor;
+        String sql = "SELECT *  FROM Inventario WHERE idAlmacen = " + idAlmacen + " AND idProducto=" + idProducto + " AND idcolor=" + idColor;
         ResultSet resultado = stm.executeQuery(sql);
         int stock = 0;
         Inventario inv = new Inventario();
@@ -161,20 +161,19 @@ public class InventarioDao {
     }
 
     //Medoti que realiaza la recuperacion del stock del producto 
-    public int recuperarStockProducto(int idProducto, int idColor,int idAlmacen) {
-        int stock=0;
+    public int recuperarStockProducto(int idProducto, int idColor, int idAlmacen) {
+        int stock = 0;
         Query query = sesion.createQuery("SELECT stock FROM Inventario WHERE idProducto=? and idcolor=? and idAlmacen=?");
         query.setInteger(0, idProducto);
         query.setInteger(1, idColor);
         query.setInteger(2, idAlmacen);
-        
+
         stock = (int) query.uniqueResult();
         tx.commit();
         sesion.close();
         return stock;
     }
-    
-    
+
     //metodo que realiza la actualizacion de los datos en la BD
     public static void actualizaStockInventario(int id, String stock) {
         try {
@@ -189,17 +188,25 @@ public class InventarioDao {
             JOptionPane.showMessageDialog(null, "Error al actualizar el precio del producto..!!" + ex.getMessage());
         }
     }
-    
-    public  int recuperarStock(int idProducto, int idAlm,int idColor) {
-        try 
-        {
+
+    //metodo que realiza la devolucion del stock del producto seleccionado 
+    public int recuperarStockJDBC(int idProducto, int idAlm, int idColor) {
+        try {
+
+            int stock = 0;
             Connection miConexion = Conexion.getConectar();
-            PreparedStatement statement = miConexion.prepareStatement("SELECT stock FROM inventario WHERE idcolor="+idColor+"and idProducto="+idProducto+"and idAlmacen="+idAlm);
-            statement.executeUpdate();
-            statement.close();
+            Statement stm = miConexion.createStatement();
+            String sql = "SELECT i.stock FROM Inventario AS i WHERE idcolor=" + idColor + " AND idProducto=" + idProducto + " AND idAlmacen=" + idAlm;
+            ResultSet resultado = stm.executeQuery(sql);
+
+            while (resultado.next()) {
+                stock = resultado.getInt("stock");//recuperando el stock del producto en inventario
+            }
             miConexion.close();
+            return stock;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar el precio del producto..!!" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al recuperar el stock del producto en inventario..!!" + ex.getMessage());
+
         }
         return 0;
     }
